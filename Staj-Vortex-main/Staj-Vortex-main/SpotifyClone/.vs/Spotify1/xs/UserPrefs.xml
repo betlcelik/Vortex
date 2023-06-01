@@ -1,0 +1,46 @@
+﻿<Properties StartupConfiguration="{722FC0AB-7759-468A-806F-12610B4DDE17}|https">
+  <MonoDevelop.Ide.ItemProperties.Business FirstBuild="True" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.Core FirstBuild="True" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Core/DbConnection/EntityFramework/DataBaseConnection.cs">
+    <Files>
+      <File FileName="Core/concretes/Repository.cs" Line="35" Column="34" IsPinned="True" />
+      <File FileName="Entities/Class1.cs" />
+      <File FileName="Core/abstracts/IRepository.cs" />
+      <File FileName="Spotify1/Program.cs" Line="13" Column="154" />
+      <File FileName="Core/DbConnection/EntityFramework/DataBaseConnection.cs" Line="18" Column="30" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Spotify1" expanded="True">
+            <Node name="Core" expanded="True">
+              <Node name="abstracts" expanded="True" />
+              <Node name="concretes" expanded="True" />
+              <Node name="DbConnection" expanded="True">
+                <Node name="EntityFramework" expanded="True">
+                  <Node name="DataBaseConnection.cs" selected="True" />
+                </Node>
+              </Node>
+              <Node name="dtos" expanded="True">
+                <Node name="AlbumDto" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="Spotify1" expanded="True">
+              <Node name="Dependencies" expanded="True" />
+              <Node name="Properties" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Spotify1 PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.Controllers FirstBuild="True" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Entities FirstBuild="True" />
+</Properties>

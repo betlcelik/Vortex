@@ -1,0 +1,17 @@
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/Core.csproj.AssemblyReference.cache
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/Core.AssemblyInfoInputs.cache
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/Core.AssemblyInfo.cs
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/Core.csproj.CoreCompileInputs.cache
+/Users/zeynepacar/Projects/Spotify1/Core/bin/Debug/net7.0/Core.deps.json
+/Users/zeynepacar/Projects/Spotify1/Core/bin/Debug/net7.0/Core.dll
+/Users/zeynepacar/Projects/Spotify1/Core/bin/Debug/net7.0/Core.pdb
+/Users/zeynepacar/Projects/Spotify1/Core/bin/Debug/net7.0/Entities.dll
+/Users/zeynepacar/Projects/Spotify1/Core/bin/Debug/net7.0/Entities.pdb
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/Core.csproj.CopyComplete
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/Core.dll
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/refint/Core.dll
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/Core.pdb
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/ref/Core.dll
+/Users/zeynepacar/Projects/Spotify1/Core/bin/Debug/net7.0/Core.runtimeconfig.json
+/Users/zeynepacar/Projects/Spotify1/Core/obj/Debug/net7.0/Core.genruntimeconfig.cache

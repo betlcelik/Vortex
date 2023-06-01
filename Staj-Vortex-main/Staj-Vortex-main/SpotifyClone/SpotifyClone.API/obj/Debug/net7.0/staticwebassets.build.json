@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "8Q2hOYUbkOJ9iR1qO1qgMLeVcu01PCEuUJHZKvWL5g0=",
+  "Source": "SpotifyClone.API",
+  "BasePath": "_content/SpotifyClone.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
