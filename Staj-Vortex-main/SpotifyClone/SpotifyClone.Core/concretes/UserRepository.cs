@@ -19,36 +19,7 @@ namespace SpotifyClone.Core.concretes
             _context = context;
         }
 
-        UserDto IUserRepository.Login(UserLoginDto userLoginDto)
-        {
-            //string credential;
-
-            if (!string.IsNullOrEmpty(userLoginDto.loginCredential))
-            {
-                if (_context.Set<UserDto>()
-                .SingleOrDefault(u => u.userName == userLoginDto.loginCredential && u.password == userLoginDto.password) != null)
-                {
-                    // credential = "userName";
-                    return _context.Set<UserDto>()
-                 .SingleOrDefault(u => u.userName == userLoginDto.loginCredential && u.password == userLoginDto.password);
-                }
-
-                else if (_context.Set<UserDto>()
-                .SingleOrDefault(u => u.email == userLoginDto.loginCredential && u.password == userLoginDto.password) != null)
-                {
-                    // credential = "email";
-                    return _context.Set<UserDto>()
-                   .SingleOrDefault(u => u.email == userLoginDto.loginCredential && u.password == userLoginDto.password);
-                }
-                else
-                {
-                    return null;
-                }
-
-
-            }
-            return null;
-        }
+       
     }
 }
 

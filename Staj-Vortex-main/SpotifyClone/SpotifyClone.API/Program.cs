@@ -22,6 +22,7 @@ using SpotifyClone.Core.abstracts;
 using SpotifyClone.Core.AutoMapper;
 using SpotifyClone.Core.concretes;
 using SpotifyClone.Core.dtos.LikedSongsDto;
+using SpotifyClone.Core.dtos.MembershipDto;
 using SpotifyClone.Core.dtos.PlaylistSongDto;
 using SpotifyClone.Core.dtos.SavedAlbumsDto;
 using SpotifyClone.Core.dtos.SavedSongsDto;
@@ -44,6 +45,8 @@ builder.Services.AddScoped<IPlaylistRepository, PlaylistRepository>();
 builder.Services.AddScoped<IPlaylistService, PlaylistManager>();
 builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
 builder.Services.AddScoped<IMembershipService, MembershipManager>();
+builder.Services.AddScoped<IMembershipTypeRepository, MembershipTypeRepository>();
+builder.Services.AddScoped<IMembershipTypeService, MembershipTypeManager>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IGenreService, GenreManager>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
@@ -75,6 +78,7 @@ builder.Services.AddTransient<IValidator<GenreAddDto>, GenreValidator>();
 builder.Services.AddTransient<IValidator<CountryAddDto>, CountryValidator>();
 builder.Services.AddTransient<IValidator<ArtistAddDto>, ArtistValidator>();
 builder.Services.AddTransient<IValidator<AlbumAddDto>, AlbumValidator>();
+builder.Services.AddTransient<IValidator<MembershipPaymentDto> , MembershipPaymentValidator>();
 
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));

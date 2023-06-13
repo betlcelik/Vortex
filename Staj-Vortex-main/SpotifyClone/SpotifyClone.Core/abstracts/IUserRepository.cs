@@ -8,7 +8,7 @@ namespace SpotifyClone.Core.abstracts
 {
 	public interface IUserRepository : IRepository<UserDto>
 	{
-        UserDto Login(UserLoginDto userLoginDto);
+     
 
 
     }

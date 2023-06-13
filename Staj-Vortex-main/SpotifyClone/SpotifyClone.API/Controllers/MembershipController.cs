@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Spotify.core.dtos.MembershipDto;
 using Spotify.core.dtos.PlaylistDto;
 using SpotifyClone.Business.abstracts;
+using SpotifyClone.Core.dtos.MembershipDto;
 
 namespace SpotifyClone.API.Controllers
 {
@@ -83,6 +84,17 @@ namespace SpotifyClone.API.Controllers
         {
             var result = _membershipService.GetById(id);
             if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost]
+        public IActionResult BuyMembership([FromBody] MembershipPaymentDto membershipPaymentDto)
+        {
+            var result = _membershipService.BuyMembership(membershipPaymentDto);
+            if(result.Success)
             {
                 return Ok(result);
             }

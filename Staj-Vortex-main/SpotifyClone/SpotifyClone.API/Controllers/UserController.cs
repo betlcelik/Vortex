@@ -80,6 +80,17 @@ namespace SpotifyClone.API.Controllers
             return BadRequest(result);
         }
 
+        [HttpPut]
+        public IActionResult UpdatePassword([FromBody] UserUpdatePasswordDto user)
+        {
+            var result = _userService.UpdatePassword(user);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpGet]
         public IActionResult GetById(int id) {
             var result = _userService.GetById(id);

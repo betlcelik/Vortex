@@ -4,7 +4,7 @@ using Spotify.entities.abstracts;
 
 namespace Spotify.entities.concretes
 {
-	public class Albums : IAlbum
+	public class Album : IAlbum
 	{
 		
 

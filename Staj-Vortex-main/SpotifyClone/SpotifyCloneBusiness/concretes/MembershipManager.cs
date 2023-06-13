@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data;
+using Microsoft.IdentityModel.Tokens;
 using Spotify.core.dtos.MembershipDto;
 using Spotify.core.dtos.PlaylistDto;
 using Spotify.entities.abstracts;
@@ -6,18 +8,37 @@ using Spotify.entities.concretes;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
 using SpotifyClone.Core.concretes;
+using SpotifyClone.Core.dtos.MembershipDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
 using SpotifyClone.Core.Utilities.Results.Concretes;
+using SpotifyClone.Entities.concretes;
 
 namespace SpotifyClone.Business.concretes
 {
 	public class MembershipManager : IMembershipService
 	{
         private readonly IMembershipRepository _membershipRepository;
-
-		public MembershipManager(IMembershipRepository membershipRepository)
+        private readonly IMembershipTypeRepository _membershipTypeRepository;
+        private readonly IUserRepository _userRepository;
+		public MembershipManager(IMembershipRepository membershipRepository, IMembershipTypeRepository membershipTypeRepository)
 		{
             _membershipRepository = membershipRepository;
+            _membershipTypeRepository = membershipTypeRepository;
+        }
+
+        public IResult BuyMembership(MembershipPaymentDto membershipPaymentDto)
+        {
+            DateTime startDateTime = DateTime.Today;
+            DateTime endDateTime = startDateTime.AddMonths(1);
+            MembershipType membershipType = _membershipTypeRepository.GetById(membershipPaymentDto.membershipTypeId);
+            MembershipDto membership= new MembershipDto(); 
+            membership.userId = membershipPaymentDto.userId;
+            membership.membershipTypeId=membershipPaymentDto.membershipTypeId;
+            membership.startDate = startDateTime;
+            membership.endDate = endDateTime;
+            
+            Insert(membership);
+            return new SuccessResult("Ödeme işlemi onaylandı . Tutar : " + membershipType.price);
         }
 
         public IResult Delete(MembershipDto membership)

@@ -580,3 +580,4 @@ C:\Staj-Vortex-main\Staj-Vortex-main\SpotifyClone\SpotifyClone.API\obj\Debug\net
 C:\Staj-Vortex-main\Staj-Vortex-main\SpotifyClone\SpotifyClone.API\obj\Debug\net7.0\SpotifyClone.API.pdb
 C:\Staj-Vortex-main\Staj-Vortex-main\SpotifyClone\SpotifyClone.API\obj\Debug\net7.0\SpotifyClone.API.genruntimeconfig.cache
 C:\Staj-Vortex-main\Staj-Vortex-main\SpotifyClone\SpotifyClone.API\obj\Debug\net7.0\ref\SpotifyClone.API.dll
+C:\Staj-Vortex-main\Staj-Vortex-main\SpotifyClone\SpotifyClone.API\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -55,15 +55,66 @@ namespace SpotifyClone.Business.concretes
 
         public IResult Update(UserDto user)
         {
-
+            var _user = _userRepository.GetById(user.id);
+            user.password = _user.password;
             _userRepository.Update(user);
+            
             return new SuccessResult("Kullanıcı bilgileri güncellendi.");
           
         }
 
         IDataResult<UserDto> IUserService.LogIn(UserLoginDto userLoginDto)
         {
-            return new SuccessDataResult<UserDto>(_userRepository.Login(userLoginDto),"Giriş başarılı");
+
+            if(userLoginDto != null)
+            {
+                UserDto user = _userRepository.Get(user =>
+                (user.userName == userLoginDto.loginCredential || user.email == userLoginDto.loginCredential) &&
+                    user.password == userLoginDto.password);
+
+                if (user != null)
+                {
+                    return new SuccessDataResult<UserDto>(user, "Giriş başarılı");
+                }
+
+                else
+                {
+                    return new ErrorDataResult<UserDto>(null, "Bilgileri eksik veya hatalı girdiniz");
+                }
+
+            }
+            else
+            {
+                return new ErrorDataResult<UserDto>(null, "Gerekli alanları dolduruğunuzdan emin olun ");
+            }
+            
+
+            
+
+           
+        }
+
+        IResult IUserService.UpdatePassword(UserUpdatePasswordDto user)
+        {
+            var _user= _userRepository.GetById(user.id);
+            if(user != null && _user!= null)
+            {
+                if (_user.password.Equals(user.oldPassword) )
+                {
+                    if (user.newPassword.Equals(user.newPasswordRepeat))
+                    {
+                        _user.password = user.newPassword;
+                        _userRepository.Update(_user);
+                        return new SuccessResult("Şifre güncellendi");
+                    }
+                    return new ErrorResult("Giridiğiniz şifreler uyuşmuyor");
+                }
+
+                return new ErrorResult("Eksik ya da hatalı bilgi girdiniz");
+                
+            }
+
+            return new ErrorResult("Eksik ya da hatalı bilgi");
         }
     }
 }

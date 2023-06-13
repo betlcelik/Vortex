@@ -7,10 +7,11 @@ namespace Spotify.entities.abstracts
 	{
         [Key]
         int id { get; set; }
+        int membershipTypeId { get; set; }
 
-		string type { get; set; }
-		int price { get; set; }
-		int userId { get; set; }
+        //string type { get; set; }
+        //int price { get; set; }
+        int userId { get; set; }
         DateTime startDate { get; set; }
 		DateTime endDate { get; set; }
     }

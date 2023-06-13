@@ -14,8 +14,6 @@
     <None Remove="constants\DependencyResolver\Autofac\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="abstracts\" />
-    <Folder Include="concretes\" />
     <Folder Include="constants\" />
     <Folder Include="constants\DependencyResolver\" />
     <Folder Include="constants\DependencyResolver\Autofac\" />

@@ -14,6 +14,7 @@ namespace SpotifyClone.Business.abstracts
         IDataResult<UserDto> GetById(int id);
         IResult Insert(UserDto user);
         IResult Update(UserDto user);
+        IResult UpdatePassword(UserUpdatePasswordDto user);
         IDataResult<UserDto> LogIn(UserLoginDto userLoginDto);
 
 

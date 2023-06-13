@@ -12,8 +12,9 @@ namespace Spotify.entities.concretes
 
         [Key]
         public int id { get; set; }
-        public string type { get; set; }
-        public int price { get; set; }
+        public int membershipTypeId { get; set; }
+        //public string type { get; set; }
+        //public int price { get; set; }
         public int userId { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
