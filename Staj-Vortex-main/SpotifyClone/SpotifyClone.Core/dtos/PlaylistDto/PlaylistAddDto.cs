@@ -12,6 +12,7 @@ namespace Spotify.core.dtos.PlaylistDto
 		
 		public int userId { get; set; }
         public string title { get; set; }
+        public int numberOfSongs { get; set; }
     }
 }
 

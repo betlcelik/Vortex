@@ -63,6 +63,8 @@ builder.Services.AddScoped<ILikedSongsRepository, LikedSongsRepository>();
 builder.Services.AddScoped<ILikedSongsService, LikedSongsManager>();
 builder.Services.AddScoped<IPlaylistSongRepository, PlaylistSongRepository>();
 builder.Services.AddScoped<IPlaylistSongService, PlaylistSongManager>();
+builder.Services.AddScoped<IUserStatisticRepository,UserStatisticRepository>();
+builder.Services.AddScoped<IUserStatisticService,UserStatisticManager>();
 
 builder.Services.AddControllers().AddFluentValidation();
 builder.Services.AddFluentValidationAutoValidation();
@@ -79,6 +81,7 @@ builder.Services.AddTransient<IValidator<CountryAddDto>, CountryValidator>();
 builder.Services.AddTransient<IValidator<ArtistAddDto>, ArtistValidator>();
 builder.Services.AddTransient<IValidator<AlbumAddDto>, AlbumValidator>();
 builder.Services.AddTransient<IValidator<MembershipPaymentDto> , MembershipPaymentValidator>();
+
 
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));

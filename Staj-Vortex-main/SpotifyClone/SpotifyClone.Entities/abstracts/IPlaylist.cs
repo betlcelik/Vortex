@@ -11,6 +11,7 @@ namespace Spotify.entities.abstracts
         string title { get; set; }
 		int userId { get; set; }
         DateTime creationDate { get; set; }
+        int numberOfSongs { get; set; }
 
     }
 }

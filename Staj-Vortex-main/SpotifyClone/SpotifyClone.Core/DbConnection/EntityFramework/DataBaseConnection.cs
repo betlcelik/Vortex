@@ -10,11 +10,13 @@ using Spotify.core.dtos.SongDto;
 using Spotify.core.dtos.UserDto;
 using Spotify.entities.abstracts;
 using Spotify.entities.concretes;
+using SpotifyClone.Core.dtos;
 using SpotifyClone.Core.dtos.LikedSongsDto;
 using SpotifyClone.Core.dtos.MembershipTypeDto;
 using SpotifyClone.Core.dtos.PlaylistSongDto;
 using SpotifyClone.Core.dtos.SavedAlbumsDto;
 using SpotifyClone.Core.dtos.SavedSongsDto;
+using SpotifyClone.Core.dtos.UserStatisticDto;
 
 namespace Spotify.core.DbConnection.EntityFramework
 {
@@ -32,7 +34,6 @@ namespace Spotify.core.DbConnection.EntityFramework
 
         
 
-
         public DbSet<UserDto> Users { get; set; }
         public DbSet<SongDto> Songs { get; set; }
         public DbSet<PlaylistDto> Playlists { get; set; }
@@ -46,6 +47,7 @@ namespace Spotify.core.DbConnection.EntityFramework
         public DbSet<LikedSongsDto> LikedSongs { get; set; }
         public DbSet<SavedSongsDto> SavedSongs { get; set; }
         public DbSet<SavedAlbumsDto> SavedAlbums { get; set; }
+        public DbSet<UserStatisticDto> UserStatistics { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

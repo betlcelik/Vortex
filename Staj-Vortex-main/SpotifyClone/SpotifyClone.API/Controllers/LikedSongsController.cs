@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.dtos.LikedSongsDto;
@@ -11,10 +12,11 @@ namespace SpotifyClone.API.Controllers
     public class LikedSongsController : ControllerBase
 	{
         private readonly ILikedSongsService _likedSongsService;
-
-        public LikedSongsController(ILikedSongsService likedSongsService)
+        private readonly IMapper _mapper;
+        public LikedSongsController(ILikedSongsService likedSongsService,IMapper mapper)
         {
             _likedSongsService = likedSongsService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -40,9 +42,9 @@ namespace SpotifyClone.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete([FromBody] LikedSongsDto likedSong)
+        public IActionResult Delete([FromBody] LikedSongsWithoutIdDto likedSong)
         {
-            var result = _likedSongsService.Delete(likedSong);
+            var result = _likedSongsService.Delete(_mapper.Map<LikedSongsDto>(likedSong));
             if (result.Success)
             {
                 return Ok(result);

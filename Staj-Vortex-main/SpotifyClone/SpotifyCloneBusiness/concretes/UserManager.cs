@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Spotify.core.dtos.MembershipDto;
 using Spotify.core.dtos.UserDto;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
+using SpotifyClone.Core.dtos.MembershipDto;
 using SpotifyClone.Core.dtos.UserDto;
+using SpotifyClone.Core.dtos.UserStatisticDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
 using SpotifyClone.Core.Utilities.Results.Concretes;
 using SpotifyClone.Core.Validation;
+using SpotifyClone.Entities.concretes;
 
 namespace SpotifyClone.Business.concretes
 {
@@ -14,10 +18,14 @@ namespace SpotifyClone.Business.concretes
 	{
 
         private readonly IUserRepository _userRepository;
+        private readonly IMembershipService _membershipService;
+        private readonly IUserStatisticService _userStatisticService;
 
-        public UserManager(IUserRepository userRepository)
+        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService)
 		{
             _userRepository = userRepository;
+            _membershipService = membershipService;
+            _userStatisticService = userStatisticService;
 		}
 
         public IResult Delete(UserDto user)
@@ -49,6 +57,20 @@ namespace SpotifyClone.Business.concretes
         {
          
             _userRepository.Insert(user);
+            DateTime startDateTime = DateTime.Now.ToUniversalTime().Date;
+
+            MembershipDto membershipDto = new MembershipDto();
+            membershipDto.membershipTypeId = 1;
+            membershipDto.userId = user.id;
+            membershipDto.startDate = startDateTime;
+            _membershipService.Insert(membershipDto);
+
+            UserStatisticDto userStatisticDto = new UserStatisticDto();
+            userStatisticDto.userId = user.id;
+            userStatisticDto.numberOfPlaylists = 0;
+            userStatisticDto.numberOfLikedSongs = 0;
+            _userStatisticService.AddUserStatistics(userStatisticDto);
+
             return new SuccessResult("Kullanıcı eklendi.");
           
         }

@@ -12,8 +12,8 @@ namespace SpotifyClone.Entities.abstracts
        [Key]
        int id { get; set; }
        int userId { get; set; }
-       int mostLikedGenreId { get; set; }
-       int mostListenedArtistId { get; set; }
+       int? mostLikedGenreId { get; set; }
+       int? mostListenedArtistId { get; set; }
        int numberOfLikedSongs { get; set; }
        int numberOfPlaylists { get; set; }
 

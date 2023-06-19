@@ -14,10 +14,16 @@ namespace SpotifyClone.Business.concretes
     public class PlaylistSongManager : IPlaylistSongService
     {
         private readonly IPlaylistSongRepository _playlistSongRepository;
+        private readonly IMembershipService _membershipService;
+       
 
-        public PlaylistSongManager(IPlaylistSongRepository playlistSongRepository)
+        public PlaylistSongManager(IPlaylistSongRepository playlistSongRepository, IMembershipService membershipService
+            )
         {
             _playlistSongRepository = playlistSongRepository;
+            _membershipService = membershipService;
+           
+           
         }
 
         public IResult Delete(PlaylistSongDto playlistSong)
@@ -49,6 +55,7 @@ namespace SpotifyClone.Business.concretes
 
         public IResult Insert(PlaylistSongDto playlistSong)
         {
+             
             _playlistSongRepository.Insert(playlistSong);
             return new SuccessResult("Eklendi.");
         }

@@ -1,12 +1,17 @@
-﻿using System;
+﻿using SpotifyClone.Entities.concretes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotifyClone.Core.dtos
+namespace SpotifyClone.Core.dtos.UserStatisticDto
 {
-    internal class UserStatisticDto
+    public class UserStatisticDto : UserStatistic
     {
+        public UserStatisticDto()
+        {
+                
+        }
     }
 }

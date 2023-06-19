@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Linq.Expressions;
 using Spotify.core.dtos.PlaylistDto;
 using Spotify.core.dtos.SongDto;
@@ -17,26 +18,37 @@ namespace SpotifyClone.Business.concretes
 	{
         private readonly IPlaylistRepository _playlistRepository;
         private readonly IPlaylistSongService _playlistSongService;
+        private readonly IUserStatisticService _userStatisticService;
+        private readonly IMembershipService _membershipService;
 
-        public PlaylistManager(IPlaylistRepository playlistRepository, IPlaylistSongService playlistSongService)
+        public PlaylistManager(IPlaylistRepository playlistRepository, IPlaylistSongService playlistSongService, IUserStatisticService userStatisticService,IMembershipService membershipService)
         {
             _playlistRepository = playlistRepository;
             _playlistSongService = playlistSongService;
+            _userStatisticService = userStatisticService;
+            _membershipService = membershipService;
+
         }
+
+        
 
         public IResult Delete(PlaylistDto playlist)
         {
             _playlistRepository.Delete(playlist);
+            _userStatisticService.DecrasePlayLists(playlist.userId);
             return new SuccessResult("Kullanıcı silindi.");
         }
 
         public IResult DeleteById(int id)
         {
             IEnumerable<PlaylistSongDto> playlistSongs = _playlistSongService.GetAllByPlaylistId(id).Data;
+            var userId = GetById(id).Data.userId;
+            
             foreach(var playlistSong in playlistSongs) {
                 _playlistSongService.DeleteById(playlistSong.id);
+               
             }
-
+            _userStatisticService.DecrasePlayLists(userId);
             _playlistRepository.DeleteById(id);
             return new SuccessResult("Kullanıcı silindi.");
         }
@@ -59,14 +71,65 @@ namespace SpotifyClone.Business.concretes
 
         public IResult Insert(PlaylistDto playlist)
         {
+            var membership= _membershipService.GetByUserId(playlist.userId).Data.FirstOrDefault();
+
+            if(membership.membershipTypeId == 1)
+            {
+                
+                var userStatistics = _userStatisticService.GetUserStatisticByUserId(playlist.userId);
+                var numberOfPlaylists = userStatistics.Data.FirstOrDefault().numberOfPlaylists;
+                if(numberOfPlaylists >= 5)
+                {
+                    return new ErrorResult("Maximum Playlist Sınırına Ulaştınız!!");
+                }
+                else
+                {
+                    
+                    _playlistRepository.Insert(playlist);
+                   
+                    _userStatisticService.IncreasePlayLists(playlist.userId);
+                    return new SuccessResult("Playlist eklendi.");
+                }
+            }
+             
             _playlistRepository.Insert(playlist);
-            return new SuccessResult("Kullanıcı eklendi.");
+            _userStatisticService.IncreasePlayLists(playlist.userId);
+            return new SuccessResult("Playlist eklendi.");
         }
 
         public IResult Update(PlaylistDto playlist)
         {
             _playlistRepository.Update(playlist);
-            return new SuccessResult("Kullanıcı bilgileri güncellendi.");
+            return new SuccessResult("Playlist bilgileri güncellendi.");
+        }
+
+        public IResult AddSongToPlayList(PlaylistSongDto playlistSongDto)
+        {
+            var playlist = GetById(playlistSongDto.playlistId).Data;
+            if(playlist == null)
+            {
+                return new ErrorResult("null döndü");
+            }
+
+            var membership=_membershipService.GetByUserId(playlist.userId).Data.FirstOrDefault();
+
+            if(membership.membershipTypeId == 1)
+            {
+                if(playlist.numberOfSongs >= 25)
+                {
+                    return new ErrorResult("Playlist Şarkı Sayısında Maximum Sınıra Ulaştınız !!");
+                }
+                _playlistSongService.Insert(playlistSongDto);
+                playlist.numberOfSongs++;
+                Update(playlist);
+                return new SuccessResult("Şarkı eklendi");
+
+            }
+
+            _playlistSongService.Insert(playlistSongDto);
+            playlist.numberOfSongs++;
+            Update(playlist);
+            return new SuccessResult("Şarkı eklendi");
         }
     }
 }

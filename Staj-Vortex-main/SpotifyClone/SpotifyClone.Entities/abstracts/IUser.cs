@@ -6,7 +6,7 @@ namespace Spotify.entities.abstracts
 {
 	public interface IUser
 	{
-        
+		[Key]
         int id { get; set; }
 		string userName { get; set; }
 		string password { get; set; }

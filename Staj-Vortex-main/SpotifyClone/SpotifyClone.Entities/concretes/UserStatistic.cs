@@ -18,8 +18,8 @@ namespace SpotifyClone.Entities.concretes
 
         public int id { get; set; }
         public int userId { get; set; }
-        public int mostLikedGenreId { get; set; }
-        public int mostListenedArtistId { get; set; }
+        public int? mostLikedGenreId { get; set; }
+        public int? mostListenedArtistId { get; set; }
         public int numberOfLikedSongs { get; set; }
         public int numberOfPlaylists { get; set; }
     }

@@ -47,7 +47,6 @@
     <Folder Include="Utilities\Results\Abstract\" />
     <Folder Include="Utilities\Results\Concretes\" />
     <Folder Include="dtos\PlaylistSongDto\" />
-    <Folder Include="dtos\LikedSongsDto\" />
     <Folder Include="dtos\SavedSongsDto\" />
     <Folder Include="dtos\SavedAlbumsDto\" />
   </ItemGroup>

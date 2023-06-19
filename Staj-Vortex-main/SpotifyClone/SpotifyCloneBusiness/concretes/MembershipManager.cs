@@ -28,8 +28,8 @@ namespace SpotifyClone.Business.concretes
 
         public IResult BuyMembership(MembershipPaymentDto membershipPaymentDto)
         {
-            DateTime startDateTime = DateTime.Today;
-            DateTime endDateTime = startDateTime.AddMonths(1);
+            DateTime startDateTime = DateTime.Now.ToUniversalTime().Date;
+            DateTime endDateTime = startDateTime.AddMonths(1).ToUniversalTime();
             MembershipType membershipType = _membershipTypeRepository.GetById(membershipPaymentDto.membershipTypeId);
             MembershipDto membership= new MembershipDto(); 
             membership.userId = membershipPaymentDto.userId;
@@ -61,6 +61,12 @@ namespace SpotifyClone.Business.concretes
         public IDataResult<MembershipDto> GetById(int id)
         {
             return new SuccessDataResult<MembershipDto>(_membershipRepository.GetById(id));
+        }
+
+        public IDataResult<IEnumerable<MembershipDto>> GetByUserId(int userId)
+        {
+
+           return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(membership => membership.userId == userId));
         }
 
         public IResult Insert(MembershipDto membership)

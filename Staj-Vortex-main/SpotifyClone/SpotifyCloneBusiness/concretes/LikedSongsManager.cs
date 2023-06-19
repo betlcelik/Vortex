@@ -4,6 +4,7 @@ using SpotifyClone.Core.abstracts;
 using SpotifyClone.Core.concretes;
 using SpotifyClone.Core.dtos.LikedSongsDto;
 using SpotifyClone.Core.dtos.PlaylistSongDto;
+using SpotifyClone.Core.dtos.UserStatisticDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
 using SpotifyClone.Core.Utilities.Results.Concretes;
 using SpotifyClone.Entities.abstracts;
@@ -14,20 +15,28 @@ namespace SpotifyClone.Business.concretes
     public class LikedSongsManager : ILikedSongsService
     {
         private readonly ILikedSongsRepository _likedSongsRepository;
+        private readonly IUserStatisticService _userStatisticService;
 
-        public LikedSongsManager(ILikedSongsRepository likedSongsRepository)
+        public LikedSongsManager(ILikedSongsRepository likedSongsRepository, IUserStatisticService userStatisticService)
         {
             _likedSongsRepository = likedSongsRepository;
+            _userStatisticService = userStatisticService;
         }
 
-        public IResult Delete(LikedSongsDto likedSong)
+        public IResult Delete(LikedSongsWithoutIdDto likedSong)
         {
-            _likedSongsRepository.Delete(likedSong);
+
+          //  IEnumerable<LikedSongsDto> liked = GetAllByUserId(likedSong.userId);
+           // var itemToDelete = 
+            //_userStatisticService.DecraseLikedSongs(likedSong.userId);
+            //_likedSongsRepository.Delete(likedSong);
             return new SuccessResult("Şarkı beğenilerden kaldırıldı.");
         }
 
         public IResult DeleteById(int id)
         {
+            var likedSong = _likedSongsRepository.GetById(id);
+            _userStatisticService.DecraseLikedSongs(likedSong.userId);
             _likedSongsRepository.DeleteById(id);
             return new SuccessResult("Şarkı beğenilerden kaldırıldı.");
         }
@@ -50,6 +59,7 @@ namespace SpotifyClone.Business.concretes
         public IResult Insert(LikedSongsDto likedSong)
         {
             _likedSongsRepository.Insert(likedSong);
+            _userStatisticService.IncreaseLikedSongs(likedSong.userId);
             return new SuccessResult("Eklendi.");
         }
     }

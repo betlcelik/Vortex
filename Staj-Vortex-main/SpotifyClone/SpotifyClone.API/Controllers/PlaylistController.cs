@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Spotify.core.dtos.PlaylistDto;
 using Spotify.core.dtos.SongDto;
 using SpotifyClone.Business.abstracts;
+using SpotifyClone.Core.dtos.PlaylistDto;
+using SpotifyClone.Core.dtos.PlaylistSongDto;
 
 namespace SpotifyClone.API.Controllers
 {
@@ -44,7 +46,7 @@ namespace SpotifyClone.API.Controllers
 
 
         [HttpPost]
-        public IActionResult Delete([FromBody] PlaylistAddDto playlist)
+        public IActionResult Delete([FromBody] PlaylistDeleteDto playlist)
         {
             var result = _playlistService.Delete(_mapper.Map<PlaylistDto>(playlist));
             if (result.Success)
@@ -96,6 +98,17 @@ namespace SpotifyClone.API.Controllers
             if (result.Success)
             {
                 return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost]
+        public IActionResult AddSongToPlayList([FromBody] PlaylistSongDto playlistSongDto)
+        {
+            var result = _playlistService.AddSongToPlayList(playlistSongDto);
+            if (result.Success) 
+            { 
+            return Ok(result);
             }
             return BadRequest(result);
         }
