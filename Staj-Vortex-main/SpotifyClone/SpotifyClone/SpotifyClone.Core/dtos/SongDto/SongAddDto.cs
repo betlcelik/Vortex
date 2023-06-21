@@ -14,7 +14,6 @@ namespace Spotify.core.dtos.SongDto
         public int genreId { get; set; }
         public int artistId { get; set; }
         public int albumId { get; set; }
-        public DateTime releaseDate { get; set; }
         public string image { get; set; }
         public string duration { get; set; }
         public string availableMarkets { get; set; }

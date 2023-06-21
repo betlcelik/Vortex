@@ -48,6 +48,11 @@ namespace SpotifyClone.Business.concretes
             return new SuccessDataResult<IEnumerable<PlaylistSongDto>>(_playlistSongRepository.GetAll(playlistSong => playlistSong.playlistId == playlistId));
         }
 
+        public IDataResult<IEnumerable<PlaylistSongDto>> GetAllBySongId(int songId)
+        {
+            return new SuccessDataResult<IEnumerable<PlaylistSongDto>>(_playlistSongRepository.GetAll(playlist => playlist.songId == songId));
+        }
+
         public IDataResult<PlaylistSongDto> GetById(int id)
         {
             return new SuccessDataResult<PlaylistSongDto>(_playlistSongRepository.GetById(id));

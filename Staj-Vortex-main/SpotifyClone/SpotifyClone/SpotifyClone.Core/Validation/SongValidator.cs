@@ -13,7 +13,6 @@ namespace SpotifyClone.Core.Validation
 			RuleFor(song => song.genreId).NotNull();
             RuleFor(song => song.artistId).NotNull();
             RuleFor(song => song.albumId).NotNull();
-            RuleFor(song => song.releaseDate).NotNull();
 			//RuleFor(song => song.image);
 			//RuleFor(song => song.duration)
         }

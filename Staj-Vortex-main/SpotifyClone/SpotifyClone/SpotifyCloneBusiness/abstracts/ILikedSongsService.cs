@@ -13,6 +13,7 @@ namespace SpotifyClone.Business.abstracts
         IDataResult<LikedSongsDto> GetById(int id);
         IResult Insert(LikedSongsDto likedSongs);
         IDataResult<IEnumerable<LikedSongsDto>> GetAllByUserId(int userId);
+        IDataResult<IEnumerable<LikedSongsDto>> GetAllBySongId(int songId);
     }
 }
 

@@ -43,11 +43,6 @@ namespace SpotifyClone.Business.concretes
             return new SuccessDataResult<IEnumerable<AlbumDto>>(_albumRepository.GetAll(album => album.artistId == artistId));
         }
 
-        public IDataResult<IEnumerable<AlbumDto>> GetAllByGenreId(int genreId)
-        {
-            return new SuccessDataResult<IEnumerable<AlbumDto>>(_albumRepository.GetAll(album => album.genreId == genreId));
-        }
-
         public IDataResult<AlbumDto> GetById(int id)
         {
             return new SuccessDataResult<AlbumDto>(_albumRepository.GetById(id));
@@ -55,14 +50,17 @@ namespace SpotifyClone.Business.concretes
 
         public IResult Insert(AlbumDto album)
         {
+            DateTime currentDate = DateTime.Now.ToUniversalTime().Date;
+            album.releaseDate = currentDate;
+            album.totalTracks = 0;
             _albumRepository.Insert(album);
-            return new SuccessResult("Kullanıcı eklendi.");
+            return new SuccessResult("Albüm eklendi.");
         }
 
         public IResult Update(AlbumDto album)
         {
             _albumRepository.Update(album);
-            return new SuccessResult("Kullanıcı bilgileri güncellendi.");
+            return new SuccessResult("Albüm bilgileri güncellendi.");
         }
     }
 }

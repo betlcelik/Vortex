@@ -42,16 +42,7 @@ namespace SpotifyClone.API.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet]
-        public IActionResult GetAllByGenreId(int genreId)
-        {
-            var result = _albumService.GetAllByGenreId(genreId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+       
 
 
         [HttpPost]
