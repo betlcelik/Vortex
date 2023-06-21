@@ -12,5 +12,7 @@ namespace SpotifyClone.Business.abstracts
     public interface IAdminPanelService
     {
         IDataResult<SystemStatisticDto> GetSystemStatiscs();
+        IResult GetTotalIncome();
+        IResult CalculateProfitAndLoss();
     }
 }

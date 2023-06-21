@@ -11,5 +11,6 @@ namespace SpotifyClone.Core.abstracts
         int GetRegisteredUsersCount();
         int GetPaidUsersCount();
         int GetNumberOfSongs();
+        double GetTotalIncome();
     }
 }

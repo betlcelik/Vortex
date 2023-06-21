@@ -32,5 +32,11 @@ namespace SpotifyClone.Core.concretes
            
             return _context.Users.Count();
         }
+
+        public double GetTotalIncome()
+        {
+            return _context.Payments.Sum(payment => payment.price);
+            
+        }
     }
 }

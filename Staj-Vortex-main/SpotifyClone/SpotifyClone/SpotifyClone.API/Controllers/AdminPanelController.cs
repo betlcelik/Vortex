@@ -25,5 +25,27 @@ namespace SpotifyClone.API.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet]
+        public IActionResult GetTotalIncome()
+        {
+            var result = _adminPanelService.GetTotalIncome();
+            if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+        }
+        [HttpGet]
+        public IActionResult CalculateProfitAndLoss()
+        {
+            var result = _adminPanelService.CalculateProfitAndLoss();
+            if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+        }
     }
 }
