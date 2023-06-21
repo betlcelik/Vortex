@@ -8,7 +8,7 @@ namespace SpotifyClone.Business.abstracts
 	{
 
         IDataResult<IEnumerable<LikedSongsDto>> GetAll();
-        IResult Delete(LikedSongsDto likedSongs);
+        IResult Delete(LikedSongsWithoutIdDto likedSongs);
         IResult DeleteById(int id);
         IDataResult<LikedSongsDto> GetById(int id);
         IResult Insert(LikedSongsDto likedSongs);

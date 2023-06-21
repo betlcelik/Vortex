@@ -71,6 +71,7 @@ namespace SpotifyClone.Business.concretes
 
         public IResult Insert(PlaylistDto playlist)
         {
+            DateTime createionDateTime = DateTime.Now.ToUniversalTime().Date;
             var membership= _membershipService.GetByUserId(playlist.userId).Data.FirstOrDefault();
 
             if(membership.membershipTypeId == 1)
@@ -84,14 +85,13 @@ namespace SpotifyClone.Business.concretes
                 }
                 else
                 {
-                    
+                    playlist.creationDate= createionDateTime;
                     _playlistRepository.Insert(playlist);
-                   
                     _userStatisticService.IncreasePlayLists(playlist.userId);
                     return new SuccessResult("Playlist eklendi.");
                 }
             }
-             
+            playlist.creationDate = createionDateTime;
             _playlistRepository.Insert(playlist);
             _userStatisticService.IncreasePlayLists(playlist.userId);
             return new SuccessResult("Playlist eklendi.");

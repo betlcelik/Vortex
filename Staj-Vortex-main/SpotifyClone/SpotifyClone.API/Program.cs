@@ -65,6 +65,10 @@ builder.Services.AddScoped<IPlaylistSongRepository, PlaylistSongRepository>();
 builder.Services.AddScoped<IPlaylistSongService, PlaylistSongManager>();
 builder.Services.AddScoped<IUserStatisticRepository,UserStatisticRepository>();
 builder.Services.AddScoped<IUserStatisticService,UserStatisticManager>();
+builder.Services.AddScoped<IAdminPanelService,AdminPanelManager>();
+builder.Services.AddScoped<IAdminPanelRepository, AdminPanelRepository>();
+builder.Services.AddScoped<IPaymentService,PaymentManager>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
 builder.Services.AddControllers().AddFluentValidation();
 builder.Services.AddFluentValidationAutoValidation();
@@ -81,6 +85,8 @@ builder.Services.AddTransient<IValidator<CountryAddDto>, CountryValidator>();
 builder.Services.AddTransient<IValidator<ArtistAddDto>, ArtistValidator>();
 builder.Services.AddTransient<IValidator<AlbumAddDto>, AlbumValidator>();
 builder.Services.AddTransient<IValidator<MembershipPaymentDto> , MembershipPaymentValidator>();
+
+
 
 
 

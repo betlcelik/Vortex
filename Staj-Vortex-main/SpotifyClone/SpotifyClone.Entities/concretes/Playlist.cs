@@ -17,6 +17,7 @@ namespace Spotify.entities.concretes
         public int userId { get; set; }
         public DateTime creationDate { get; set; }
         public int numberOfSongs { get; set; }
+       
 
 
     }

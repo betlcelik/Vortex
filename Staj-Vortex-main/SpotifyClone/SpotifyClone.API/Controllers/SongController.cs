@@ -146,6 +146,17 @@ namespace SpotifyClone.API.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet]
+        public IActionResult GetSongsForUser(int userId)
+        {
+            var result = _songService.GetSongsForUser(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
 
 
 

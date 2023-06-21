@@ -15,9 +15,7 @@ namespace SpotifyClone.Core.Utilities.Results.Concretes
         {
         }
 
-        public SuccessDataResult() : base(default, true)
-        {
-        }
+      
     }
 }
 

@@ -13,6 +13,7 @@ using Spotify.entities.concretes;
 using SpotifyClone.Core.dtos;
 using SpotifyClone.Core.dtos.LikedSongsDto;
 using SpotifyClone.Core.dtos.MembershipTypeDto;
+using SpotifyClone.Core.dtos.PaymentDto;
 using SpotifyClone.Core.dtos.PlaylistSongDto;
 using SpotifyClone.Core.dtos.SavedAlbumsDto;
 using SpotifyClone.Core.dtos.SavedSongsDto;
@@ -48,6 +49,7 @@ namespace Spotify.core.DbConnection.EntityFramework
         public DbSet<SavedSongsDto> SavedSongs { get; set; }
         public DbSet<SavedAlbumsDto> SavedAlbums { get; set; }
         public DbSet<UserStatisticDto> UserStatistics { get; set; }
+        public DbSet<PaymentDto> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,6 +60,8 @@ namespace Spotify.core.DbConnection.EntityFramework
             });
 
         }
+
+        
         #endregion
 
 

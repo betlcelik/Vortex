@@ -5,6 +5,7 @@ using Spotify.core.dtos.MembershipDto;
 using Spotify.core.dtos.PlaylistDto;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.dtos.MembershipDto;
+using SpotifyClone.Core.dtos.PaymentDto;
 
 namespace SpotifyClone.API.Controllers
 {
@@ -89,12 +90,44 @@ namespace SpotifyClone.API.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet]
+        public IActionResult GetByUserId(int userId) 
+        {
+            var result =_membershipService.GetByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
         [HttpPost]
-        public IActionResult BuyMembership([FromBody] MembershipPaymentDto membershipPaymentDto)
+        public IActionResult BuyMembership([FromBody] PaymentAddDto membershipPaymentDto)
         {
-            var result = _membershipService.BuyMembership(membershipPaymentDto);
+            var result = _membershipService.BuyMembership(_mapper.Map<PaymentDto>(membershipPaymentDto));
             if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost]
+        public IActionResult UpgradeMembership([FromBody] PaymentAddDto membershipPaymentDto)
+        {
+            var result = _membershipService.UpgradeMembership(_mapper.Map<PaymentDto>(membershipPaymentDto));
+            if (result.Success)
+            {
+                return Ok(result);
+
+            }
+            return BadRequest(result);
+        }
+        [HttpPut]
+        public IActionResult DowngradeMembership(int userId)
+        {
+            var result = _membershipService.DowngradeMembership(userId);
+            if (result.Success)
             {
                 return Ok(result);
             }

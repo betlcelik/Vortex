@@ -8,7 +8,7 @@ namespace SpotifyClone.Core.concretes
 {
 	public class AlbumRepository : Repository<AlbumDto>, IAlbumRepository
 	{
-		public AlbumRepository(DataBaseConnection context) : base(context)
+        public AlbumRepository(DataBaseConnection context) : base(context)
         {
         }
     }

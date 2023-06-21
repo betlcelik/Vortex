@@ -1,6 +1,7 @@
 ﻿using System;
 using Spotify.core.dtos.MembershipDto;
 using SpotifyClone.Core.dtos.MembershipDto;
+using SpotifyClone.Core.dtos.PaymentDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
 
 namespace SpotifyClone.Business.abstracts
@@ -14,7 +15,10 @@ namespace SpotifyClone.Business.abstracts
         IDataResult<IEnumerable<MembershipDto>> GetByUserId(int userId);
         IResult Insert(MembershipDto membership);
         IResult Update(MembershipDto membership);
-        IResult BuyMembership(MembershipPaymentDto membershipPaymentDto);
+        IResult BuyMembership(PaymentDto membershipPaymentDto);
+        IResult UpgradeMembership(PaymentDto membershipPaymentDto);
+        IResult DowngradeMembership(int userId);
+       
     }
 }
 

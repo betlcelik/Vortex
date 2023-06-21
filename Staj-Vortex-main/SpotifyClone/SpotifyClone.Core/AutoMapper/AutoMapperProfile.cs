@@ -9,6 +9,7 @@ using Spotify.core.dtos.PlaylistDto;
 using Spotify.core.dtos.SongDto;
 using Spotify.core.dtos.UserDto;
 using SpotifyClone.Core.dtos.LikedSongsDto;
+using SpotifyClone.Core.dtos.PaymentDto;
 using SpotifyClone.Core.dtos.PlaylistDto;
 using SpotifyClone.Core.dtos.SongDto;
 using SpotifyClone.Core.dtos.UserDto;
@@ -34,6 +35,7 @@ namespace SpotifyClone.Core.AutoMapper
             CreateMap<AlbumDto, AlbumAddDto>().ReverseMap();
             CreateMap<UserStatisticDto,AddUserStatisticDto>().ReverseMap();
             CreateMap<LikedSongsDto,LikedSongsWithoutIdDto>().ReverseMap();
+            CreateMap<PaymentDto, PaymentAddDto>().ReverseMap();
 
 
 

@@ -44,7 +44,7 @@ namespace SpotifyClone.API.Controllers
         [HttpPost]
         public IActionResult Delete([FromBody] LikedSongsWithoutIdDto likedSong)
         {
-            var result = _likedSongsService.Delete(_mapper.Map<LikedSongsDto>(likedSong));
+            var result = _likedSongsService.Delete(likedSong);
             if (result.Success)
             {
                 return Ok(result);

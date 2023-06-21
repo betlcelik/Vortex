@@ -18,12 +18,15 @@ namespace SpotifyClone.Business.concretes
         private readonly ISongRepository _songRepository;
         private readonly ICountryRepository _countryRepository;
         private readonly ICountryService _countryService;
+        private readonly IUserService _userService;
 
-        public SongManager(ISongRepository songRepository, ICountryService countryService, ICountryRepository countryRepository)
+        public SongManager(ISongRepository songRepository, ICountryService countryService, ICountryRepository countryRepository, IUserService userService)
         {
             _songRepository = songRepository;
             _countryService = countryService;
             _countryRepository = countryRepository;
+            _userService = userService;
+
         }
 
         public IResult Delete(SongDto song)
@@ -67,6 +70,30 @@ namespace SpotifyClone.Business.concretes
             return new SuccessDataResult<SongDto>(song);
         }
 
+        public IDataResult<IEnumerable<SongDto>> GetSongsForUser(int userId)
+        {
+            int count = 0;
+            var userCountryId=_userService.GetById(userId).Data.countryId;
+            IEnumerable<SongDto> songsToList = new List<SongDto>();
+            var songs= _songRepository.GetAll();
+            foreach (SongDto song in songs)
+            {
+                var marketList=song.availableMarkets.Split(",").ToList();
+               
+                if (marketList.Contains(userCountryId.ToString()))
+                {
+                   songsToList= songsToList.Append(song).ToList();
+                    //return new SuccessDataResult<IEnumerable<SongDto>>(songsToList, "Şarkılar Listeleniyor .......... "+song.id);
+                }
+            }
+
+            foreach (SongDto song in songsToList)
+            {
+                count++;
+            }
+            return new SuccessDataResult<IEnumerable<SongDto>>(songsToList,"Şarkılar Listeleniyor"+count+"country " +userCountryId);
+        }
+
         public IResult Insert(SongDto song)
         {
             var marketlist=song.availableMarkets.Split(",").ToList();
@@ -76,8 +103,10 @@ namespace SpotifyClone.Business.concretes
                     throw new ArgumentException($"Market id {item} is not valid.");
                 }
             }
-            string json = JsonSerializer.Serialize(marketlist);
-            song.availableMarkets = json;
+            //string json = JsonSerializer.Serialize(marketlist);
+            string availableMarkets = string.Join(",", marketlist);
+            song.availableMarkets = availableMarkets;
+            //song.availableMarkets = json;
 
             _songRepository.Insert(song);
 

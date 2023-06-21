@@ -26,10 +26,10 @@ namespace SpotifyClone.Business.concretes
         public IResult Delete(LikedSongsWithoutIdDto likedSong)
         {
 
-          //  IEnumerable<LikedSongsDto> liked = GetAllByUserId(likedSong.userId);
-           // var itemToDelete = 
-            //_userStatisticService.DecraseLikedSongs(likedSong.userId);
-            //_likedSongsRepository.Delete(likedSong);
+         LikedSongsDto itemToDelete = GetAllByUserId(likedSong.userId).Data.FirstOrDefault(liked => liked.songId == likedSong.songId);
+              
+            _userStatisticService.DecraseLikedSongs(likedSong.userId);
+            _likedSongsRepository.Delete(itemToDelete);
             return new SuccessResult("Şarkı beğenilerden kaldırıldı.");
         }
 
