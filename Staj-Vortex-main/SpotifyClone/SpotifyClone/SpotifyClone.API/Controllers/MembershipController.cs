@@ -112,6 +112,7 @@ namespace SpotifyClone.API.Controllers
             return BadRequest(result);
         }
 
+        // *
         [HttpPost]
         public IActionResult UpgradeMembership([FromBody] PaymentAddDto membershipPaymentDto)
         {
