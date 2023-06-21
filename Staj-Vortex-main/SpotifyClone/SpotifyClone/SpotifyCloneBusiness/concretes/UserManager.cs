@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Spotify.core.dtos.MembershipDto;
+using Spotify.core.dtos.PlaylistDto;
 using Spotify.core.dtos.UserDto;
+using Spotify.entities.concretes;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
 using SpotifyClone.Core.dtos.MembershipDto;
@@ -20,23 +22,38 @@ namespace SpotifyClone.Business.concretes
         private readonly IUserRepository _userRepository;
         private readonly IMembershipService _membershipService;
         private readonly IUserStatisticService _userStatisticService;
+        private readonly IPlaylistService _playlistService;
 
-        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService)
+        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService,IPlaylistService  playlistService)
 		{
             _userRepository = userRepository;
             _membershipService = membershipService;
             _userStatisticService = userStatisticService;
+            _playlistService = playlistService;
 		}
 
         public IResult Delete(UserDto user)
         {
+            var membership = _membershipService.GetByUserId(user.id).Data.FirstOrDefault();
+            _membershipService.DeleteById(membership.id);
             _userRepository.Delete(user);
-            
+          
             return new SuccessResult("Kullanıcı silindi.");
         }
 
         public IResult DeleteById(int id)
-        {
+        {    
+            var user = GetById(id).Data;
+           var userPlaylists = _playlistService.GetByUserId(id).Data;
+            var membership = _membershipService.GetByUserId(user.id).Data.FirstOrDefault();
+            var userStatistic= _userStatisticService.GetUserStatisticByUserId(user.id);
+
+            foreach(Playlist playlist in userPlaylists)
+            {
+                _playlistService.DeleteById(playlist.id);
+            }
+            _userStatisticService.DeleteById(userStatistic.Data.FirstOrDefault().id);
+            _membershipService.DeleteById(membership.id);
             _userRepository.DeleteById(id);
             return new SuccessResult("Kullanıcı silindi.");
         }

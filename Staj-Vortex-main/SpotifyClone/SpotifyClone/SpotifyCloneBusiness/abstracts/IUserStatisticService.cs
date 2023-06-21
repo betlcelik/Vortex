@@ -12,8 +12,10 @@ namespace SpotifyClone.Business.abstracts
     public interface IUserStatisticService
     {
         IDataResult<IEnumerable<UserStatisticDto>> GetUserStatisticByUserId(int userId);
+        IDataResult<IEnumerable<UserStatisticDto>> ShowUserStatisticByUserId(int userId);
         IResult AddUserStatistics(UserStatisticDto addUserStatisticDto);
         IResult Update(UserStatisticDto updateUserStatisticDto);
+        IResult DeleteById(int id);
         IResult IncreaseLikedSongs(int userId);
         IResult DecraseLikedSongs(int userId);
         IResult IncreasePlayLists(int userId);

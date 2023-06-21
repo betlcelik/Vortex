@@ -90,6 +90,16 @@ namespace SpotifyClone.API.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet]
+        public IActionResult GetByUserId(int userId) 
+        {
+            var result =_membershipService.GetByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
         [HttpPost]
         public IActionResult BuyMembership([FromBody] PaymentAddDto membershipPaymentDto)

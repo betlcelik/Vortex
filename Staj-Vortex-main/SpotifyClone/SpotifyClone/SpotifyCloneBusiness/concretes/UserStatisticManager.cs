@@ -33,14 +33,9 @@ namespace SpotifyClone.Business.concretes
 
         public IDataResult<IEnumerable<UserStatisticDto>> GetUserStatisticByUserId(int userId)
         {
-            var userType=_membershipService.GetByUserId(userId).Data.FirstOrDefault().membershipTypeId;
-            if(userType == 1)
-            {
-                return new ErrorDataResult<IEnumerable<UserStatisticDto>>(null,"Kullanıcı istatistikleri sadece ücretli üyelikler için geçerlidir"+userType);
-            }
             
             var userStatistics = _userStatisticRepository.GetAll(userStatistic => userStatistic.userId == userId);
-            return new SuccessDataResult<IEnumerable<UserStatisticDto>>(userStatistics," " + userType);
+            return new SuccessDataResult<IEnumerable<UserStatisticDto>>(userStatistics,"Kullanıcı istatistikleri listeleniyor");
         }
 
         public IResult IncreaseLikedSongs(int userId)
@@ -116,8 +111,24 @@ namespace SpotifyClone.Business.concretes
             return new SuccessResult("Kullanıcı istatistikleri güncellendi");
         }
 
-       
+        public IResult DeleteById(int id)
+        {
+           _userStatisticRepository.DeleteById(id);
+            return new SuccessResult("Kullanıcı istatistikleri silindi");
         }
+
+        public IDataResult<IEnumerable<UserStatisticDto>> ShowUserStatisticByUserId(int userId)
+        {
+            var userType=_membershipService.GetByUserId(userId).Data.FirstOrDefault().membershipTypeId;
+             if(userType == 1)
+             {
+                 return new ErrorDataResult<IEnumerable<UserStatisticDto>>(null,"Kullanıcı istatistikleri sadece ücretli üyelikler için geçerlidir"+userType);
+             }
+            var userStatistics = _userStatisticRepository.GetAll(userStatistic => userStatistic.userId == userId);
+            return new SuccessDataResult<IEnumerable<UserStatisticDto>>(userStatistics, "Kullanıcı istatistikleri listeleniyor");
+
+        }
+    }
 
         
     }

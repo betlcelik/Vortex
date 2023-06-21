@@ -29,6 +29,16 @@ namespace SpotifyClone.API.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet]
+        public IActionResult ShowUserStatistic(int id)
+        {
+            var result = _userStatisticService.ShowUserStatisticByUserId(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
         [HttpPost]
 
