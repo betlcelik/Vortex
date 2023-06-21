@@ -23,13 +23,15 @@ namespace SpotifyClone.Business.concretes
         private readonly IMembershipService _membershipService;
         private readonly IUserStatisticService _userStatisticService;
         private readonly IPlaylistService _playlistService;
+        private readonly ILikedSongsService _likedSongsService;
 
-        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService,IPlaylistService  playlistService)
+        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService,IPlaylistService  playlistService,ILikedSongsService likedSongsService)
 		{
             _userRepository = userRepository;
             _membershipService = membershipService;
             _userStatisticService = userStatisticService;
             _playlistService = playlistService;
+            _likedSongsService = likedSongsService;
 		}
 
         public IResult Delete(UserDto user)
@@ -44,14 +46,29 @@ namespace SpotifyClone.Business.concretes
         public IResult DeleteById(int id)
         {    
             var user = GetById(id).Data;
-           var userPlaylists = _playlistService.GetByUserId(id).Data;
+            var userPlaylists = _playlistService.GetByUserId(id).Data;
             var membership = _membershipService.GetByUserId(user.id).Data.FirstOrDefault();
             var userStatistic= _userStatisticService.GetUserStatisticByUserId(user.id);
+            var userLikedSongs=_likedSongsService.GetAllByUserId(user.id).Data;
 
-            foreach(Playlist playlist in userPlaylists)
+            if(userPlaylists != null)
             {
-                _playlistService.DeleteById(playlist.id);
+                foreach (Playlist playlist in userPlaylists)
+                {
+                    _playlistService.DeleteById(playlist.id);
+                }
             }
+            
+            if(userLikedSongs != null)
+            {
+                foreach (LikedSongs likedSong in userLikedSongs)
+                {
+                    _likedSongsService.DeleteById(likedSong.id);
+                }
+            }
+            
+
+
             _userStatisticService.DeleteById(userStatistic.Data.FirstOrDefault().id);
             _membershipService.DeleteById(membership.id);
             _userRepository.DeleteById(id);

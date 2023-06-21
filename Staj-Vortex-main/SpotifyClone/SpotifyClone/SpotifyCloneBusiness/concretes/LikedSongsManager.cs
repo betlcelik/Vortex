@@ -27,7 +27,7 @@ namespace SpotifyClone.Business.concretes
         {
 
          LikedSongsDto itemToDelete = GetAllByUserId(likedSong.userId).Data.FirstOrDefault(liked => liked.songId == likedSong.songId);
-           // var itemToDelete = 
+              
             _userStatisticService.DecraseLikedSongs(likedSong.userId);
             _likedSongsRepository.Delete(itemToDelete);
             return new SuccessResult("Şarkı beğenilerden kaldırıldı.");
