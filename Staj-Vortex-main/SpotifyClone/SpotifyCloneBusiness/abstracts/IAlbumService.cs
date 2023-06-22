@@ -14,7 +14,7 @@ namespace SpotifyClone.Business.abstracts
         IResult Insert(AlbumDto album);
         IResult Update(AlbumDto album);
         IDataResult<IEnumerable<AlbumDto>> GetAllByArtistId(int artistId);
-        IDataResult<IEnumerable<AlbumDto>> GetAllByGenreId(int genreId);
+       
     }
 }
 

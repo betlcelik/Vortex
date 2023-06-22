@@ -24,14 +24,16 @@ namespace SpotifyClone.Business.concretes
         private readonly IUserStatisticService _userStatisticService;
         private readonly IPlaylistService _playlistService;
         private readonly ILikedSongsService _likedSongsService;
+        private readonly IPaymentService _paymentService;
 
-        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService,IPlaylistService  playlistService,ILikedSongsService likedSongsService)
+        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService,IPlaylistService  playlistService,ILikedSongsService likedSongsService,IPaymentService paymentService)
 		{
             _userRepository = userRepository;
             _membershipService = membershipService;
             _userStatisticService = userStatisticService;
             _playlistService = playlistService;
             _likedSongsService = likedSongsService;
+            _paymentService = paymentService;
 		}
 
         public IResult Delete(UserDto user)
@@ -48,7 +50,8 @@ namespace SpotifyClone.Business.concretes
             var user = GetById(id).Data;
             var userPlaylists = _playlistService.GetByUserId(id).Data;
             var membership = _membershipService.GetByUserId(user.id).Data.FirstOrDefault();
-            var userStatistic= _userStatisticService.GetUserStatisticByUserId(user.id);
+            
+            var userStatistic= _userStatisticService.GetUserStatisticByUserId(user.id).Data.FirstOrDefault();
             var userLikedSongs=_likedSongsService.GetAllByUserId(user.id).Data;
 
             if(userPlaylists != null)
@@ -67,10 +70,16 @@ namespace SpotifyClone.Business.concretes
                 }
             }
             
-
-
-            _userStatisticService.DeleteById(userStatistic.Data.FirstOrDefault().id);
-            _membershipService.DeleteById(membership.id);
+            if(userStatistic != null)
+            {
+                _userStatisticService.DeleteById(userStatistic.id);
+            }
+            if(membership != null)
+            {
+                _membershipService.DeleteById(membership.id);
+            }
+            
+            
             _userRepository.DeleteById(id);
             return new SuccessResult("Kullanıcı silindi.");
         }
@@ -89,9 +98,11 @@ namespace SpotifyClone.Business.concretes
         
         public IResult Insert(UserDto user)
         {
-         
-            _userRepository.Insert(user);
+
             DateTime startDateTime = DateTime.Now.ToUniversalTime().Date;
+            user.creationDate = startDateTime;
+            _userRepository.Insert(user);
+            
 
             MembershipDto membershipDto = new MembershipDto();
             membershipDto.membershipTypeId = 1;

@@ -131,6 +131,15 @@ namespace SpotifyClone.Business.concretes
             Update(playlist);
             return new SuccessResult("Şarkı eklendi");
         }
+
+        public IDataResult<IEnumerable<PlaylistSongDto>> GetBySongId(int songID)
+        {
+            var playlists=_playlistSongService.GetAllBySongId(songID).Data;
+            
+            
+            return new SuccessDataResult<IEnumerable<PlaylistSongDto>>(playlists,"Şarkının bulunduğu playlistler listeleniyor");
+            
+        }
     }
 }
 

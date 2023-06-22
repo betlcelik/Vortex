@@ -15,6 +15,7 @@ namespace SpotifyClone.Business.abstracts
         IResult Insert(PlaylistDto playlist);
         IResult Update(PlaylistDto playlist);
         IDataResult<IEnumerable<PlaylistDto>> GetByUserId(int userId);
+        
         IResult AddSongToPlayList(PlaylistSongDto playlistSongDto);
     }
 }
