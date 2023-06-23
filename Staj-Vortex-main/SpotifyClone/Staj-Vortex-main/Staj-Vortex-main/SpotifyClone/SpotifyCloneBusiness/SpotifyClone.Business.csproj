@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="abstracts\" />
+    <None Remove="concretes\" />
+    <None Remove="constants\" />
+    <None Remove="constants\DependencyResolver\" />
+    <None Remove="constants\DependencyResolver\Autofac\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="constants\" />
+    <Folder Include="constants\DependencyResolver\" />
+    <Folder Include="constants\DependencyResolver\Autofac\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpotifyClone.Core\SpotifyClone.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="7.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
+  </ItemGroup>
+</Project>

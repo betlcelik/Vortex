@@ -1,0 +1,65 @@
+﻿<Properties StartupConfiguration="{722FC0AB-7759-468A-806F-12610B4DDE17}|https">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="SpotifyCloneBusiness/abstracts/IUserService.cs">
+    <Files>
+      <File FileName="SpotifyClone.API/Controllers/PlaylistController.cs" Line="37" Column="58" />
+      <File FileName="SpotifyClone.Core/concretes/Repository.cs" Line="60" Column="1" />
+      <File FileName="SpotifyCloneBusiness/abstracts/ISavedAlbumsService.cs" Line="16" Column="77" />
+      <File FileName="SpotifyCloneBusiness/abstracts/IPlaylistSongService.cs" Line="1" Column="1" />
+      <File FileName="SpotifyCloneBusiness/abstracts/IPlaylistService.cs" Line="1" Column="1" />
+      <File FileName="SpotifyCloneBusiness/abstracts/IMembershipService.cs" Line="1" Column="1" />
+      <File FileName="SpotifyCloneBusiness/abstracts/IGenreService.cs" Line="1" Column="1" />
+      <File FileName="SpotifyCloneBusiness/abstracts/ICountryService.cs" Line="1" Column="1" />
+      <File FileName="SpotifyCloneBusiness/abstracts/IArtistService.cs" Line="1" Column="1" />
+      <File FileName="SpotifyClone.Entities/concretes/Artist.cs" Line="1" Column="1" />
+      <File FileName="SpotifyClone.Entities/concretes/Album.cs" Line="1" Column="1" />
+      <File FileName="SpotifyClone.Entities/concretes/Country.cs" Line="1" Column="1" />
+      <File FileName="SpotifyCloneBusiness/abstracts/IAlbumService.cs" Line="17" Column="73" />
+      <File FileName="SpotifyCloneBusiness/concretes/AlbumManager.cs" Line="45" Column="1" />
+      <File FileName="SpotifyClone.API/Controllers/AlbumController.cs" Line="48" Column="63" />
+      <File FileName="SpotifyCloneBusiness/concretes/PlaylistManager.cs" Line="37" Column="66" />
+      <File FileName="SpotifyCloneBusiness/concretes/SongManager.cs" Line="56" Column="1" />
+      <File FileName="SpotifyCloneBusiness/concretes/SavedSongsManager.cs" Line="1" Column="1" />
+      <File FileName="SpotifyCloneBusiness/concretes/SavedAlbumsManager.cs" Line="1" Column="1" />
+      <File FileName="SpotifyCloneBusiness/abstracts/IUserService.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SpotifyClone" expanded="True">
+            <Node name="SpotifyClone.API" expanded="True">
+              <Node name="Controllers" expanded="True" />
+            </Node>
+            <Node name="SpotifyClone.Business" expanded="True">
+              <Node name="abstracts" expanded="True">
+                <Node name="IUserService.cs" selected="True" />
+              </Node>
+              <Node name="concretes" expanded="True" />
+              <Node name="constants" expanded="True" />
+            </Node>
+            <Node name="SpotifyClone.Core" expanded="True">
+              <Node name="abstracts" expanded="True" />
+              <Node name="concretes" expanded="True" />
+              <Node name="DbConnection" expanded="True">
+                <Node name="EntityFramework" expanded="True" />
+              </Node>
+              <Node name="dtos" expanded="True">
+                <Node name="PlaylistDto" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="SpotifyClone.Entities" expanded="True">
+              <Node name="abstracts" expanded="True" />
+              <Node name="concretes" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.SpotifyClone.API PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+</Properties>
