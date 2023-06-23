@@ -17,21 +17,17 @@ namespace SpotifyClone.Business.concretes
 	public class SongManager : ISongService
 	{
         private readonly ISongRepository _songRepository;
-        private readonly ICountryRepository _countryRepository;
         private readonly ICountryService _countryService;
         private readonly IUserService _userService;
-        private readonly IAlbumService _albumService;
         private readonly IPlaylistSongService _playlistSongService;
         private readonly ILikedSongsService _likedSongsService;
       
 
-        public SongManager(ISongRepository songRepository, ICountryService countryService, ICountryRepository countryRepository, IUserService userService, IAlbumService albumService,IPlaylistSongService playlistSongService, ILikedSongsService likedSongsService)
+        public SongManager(ISongRepository songRepository, ICountryService countryService, IUserService userService,IPlaylistSongService playlistSongService, ILikedSongsService likedSongsService)
         {
             _songRepository = songRepository;
             _countryService = countryService;
-            _countryRepository = countryRepository;
             _userService = userService;
-            _albumService = albumService;
             _playlistSongService = playlistSongService;
             _likedSongsService = likedSongsService;
            
@@ -48,7 +44,6 @@ namespace SpotifyClone.Business.concretes
             
 
             var song= _songRepository.GetById(id);
-            var album = _albumService.GetById(song.albumId).Data;
             var playlistsongs=_playlistSongService.GetAllBySongId(song.id).Data;
             var likedSongs = _likedSongsService.GetAllBySongId(song.id).Data;
 
@@ -69,8 +64,6 @@ namespace SpotifyClone.Business.concretes
             }
 
             _songRepository.DeleteById(id);
-            album.totalTracks--;
-            _albumService.Update(album);
             return new SuccessResult("Şarkı silindi.");
         }
 
@@ -131,7 +124,6 @@ namespace SpotifyClone.Business.concretes
         {
             DateTime currentDate = DateTime.Now.ToUniversalTime().Date;
             var marketlist=song.availableMarkets.Split(",").ToList();
-            var album = _albumService.GetById(song.albumId).Data;
             
             foreach (var item in marketlist)
             {
@@ -145,8 +137,6 @@ namespace SpotifyClone.Business.concretes
             song.releaseDate = currentDate;
             _songRepository.Insert(song);
 
-            album.totalTracks++;
-            _albumService.Update(album);
             return new SuccessResult("Şarkı eklendi.");
         }
 

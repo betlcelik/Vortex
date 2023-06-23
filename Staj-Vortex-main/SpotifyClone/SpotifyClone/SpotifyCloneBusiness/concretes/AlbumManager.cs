@@ -15,22 +15,31 @@ namespace SpotifyClone.Business.concretes
 	public class AlbumManager : IAlbumService
 	{
         private readonly IAlbumRepository _albumRepository;
+        private readonly ISongService _songService;
+       
 
-		public AlbumManager(IAlbumRepository albumRepository)
+		public AlbumManager(IAlbumRepository albumRepository, ISongService songService)
         {
             _albumRepository = albumRepository;
+            _songService = songService;
         }
 
         public IResult Delete(AlbumDto album)
         {
+            
             _albumRepository.Delete(album);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Albüm silindi.");
         }
 
         public IResult DeleteById(int id)
         {
+            var albumSongs=_songService.GetAllByAlbumId(id).Data;
+            foreach (var song in albumSongs)
+            {
+                _songService.DeleteById(song.id);
+            }
             _albumRepository.DeleteById(id);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Albüm silindi.");
         }
 
         public IDataResult<IEnumerable<AlbumDto>> GetAll()

@@ -23,6 +23,7 @@ namespace Spotify.entities.concretes
         public int? totalFollowings { get; set; }
         public string? device { get; set; }
         public string? image { get; set; }
+        public string state { get; set; }
     }
 }
 

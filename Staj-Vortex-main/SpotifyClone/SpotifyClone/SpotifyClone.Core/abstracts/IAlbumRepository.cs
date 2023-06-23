@@ -6,6 +6,8 @@ namespace SpotifyClone.Core.abstracts
 {
 	public interface IAlbumRepository : IRepository<AlbumDto>
 	{
+		public int GetTotalTracksByAlbumId(int albumId);
+		//new IEnumerable<AlbumDto> GetAll();
 	}
 }
 

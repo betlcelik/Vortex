@@ -9,6 +9,8 @@ namespace SpotifyClone.Business.abstracts
 	public interface IUserService
 	{
         IDataResult<IEnumerable<UserDto>> GetAll();
+        IDataResult<IEnumerable<UserDto>> GetAllActiveUsers();
+        
         IResult Delete(UserDto user);
         IResult DeleteById(int id);
         IDataResult<UserDto> GetById(int id);
