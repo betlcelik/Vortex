@@ -42,9 +42,9 @@ namespace SpotifyClone.API.Controllers
             {
                 return Ok(result);
             }
-            return BadRequest(result);
+            return BadRequest(result); 
         }
-
+        //
         
         [HttpPost]
         public IActionResult Delete([FromBody] UserAddDto user) {
