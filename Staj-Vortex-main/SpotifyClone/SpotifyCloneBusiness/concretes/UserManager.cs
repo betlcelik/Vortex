@@ -50,7 +50,6 @@ namespace SpotifyClone.Business.concretes
             var user = GetById(id).Data;
             var userPlaylists = _playlistService.GetByUserId(id).Data;
             var membership = _membershipService.GetByUserId(user.id).Data.FirstOrDefault();
-            
             var userStatistic= _userStatisticService.GetUserStatisticByUserId(user.id).Data.FirstOrDefault();
             var userLikedSongs=_likedSongsService.GetAllByUserId(user.id).Data;
 
