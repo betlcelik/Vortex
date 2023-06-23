@@ -17,6 +17,7 @@ namespace Spotify.entities.abstracts
 		int? totalFollowers { get; set; }
         int? totalFollowings { get; set; }
 		string? device { get; set; }
+		string state { get; set; }
     }
 }
 

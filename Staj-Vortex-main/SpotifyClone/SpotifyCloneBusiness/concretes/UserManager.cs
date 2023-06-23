@@ -78,9 +78,10 @@ namespace SpotifyClone.Business.concretes
             {
                 _membershipService.DeleteById(membership.id);
             }
-            
-            
-            _userRepository.DeleteById(id);
+
+            user.state = "passive";
+            Update(user);
+            // _userRepository.DeleteById(id);
             return new SuccessResult("Kullanıcı silindi.");
         }
 
@@ -89,6 +90,11 @@ namespace SpotifyClone.Business.concretes
             return new SuccessDataResult<IEnumerable<UserDto>>(_userRepository.GetAll(),"Kullanıcılar listelendi.");
         }
 
+        public IDataResult<IEnumerable<UserDto>> GetAllActiveUsers()
+        {
+            return new SuccessDataResult<IEnumerable<UserDto>>(_userRepository.GetAll(user => user.state.Equals("active")), "Aktif Kullanıcılar Listelendi");
+        }
+        //getactiveusers
         public IDataResult<UserDto> GetById(int id)
         {
             return new SuccessDataResult<UserDto>(_userRepository.GetById(id));
@@ -101,6 +107,7 @@ namespace SpotifyClone.Business.concretes
 
             DateTime startDateTime = DateTime.Now.ToUniversalTime().Date;
             user.creationDate = startDateTime;
+            user.state = "active";
             _userRepository.Insert(user);
             
 

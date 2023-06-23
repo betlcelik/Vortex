@@ -34,8 +34,18 @@ namespace SpotifyClone.API.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet]
+        public IActionResult GetAllActiveUsers()
+        {
+            var result = _userService.GetAllActiveUsers();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        //getactiveusers
 
-        
         [HttpPost]
         public IActionResult Delete([FromBody] UserAddDto user) {
             var result = _userService.Delete(_mapper.Map<UserDto>(user));
