@@ -26,6 +26,7 @@ using SpotifyClone.Core.dtos.MembershipDto;
 using SpotifyClone.Core.dtos.PlaylistSongDto;
 using SpotifyClone.Core.dtos.SavedAlbumsDto;
 using SpotifyClone.Core.dtos.SavedSongsDto;
+using SpotifyClone.Core.dtos.UserDto;
 using SpotifyClone.Core.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -72,7 +73,8 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
 builder.Services.AddControllers().AddFluentValidation();
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddTransient<IValidator<UserAddDto>, UserValidator>();
+builder.Services.AddTransient<IValidator<UserAddDto>, UserAddValidator>();
+builder.Services.AddTransient<IValidator<UserUpdatePasswordDto>,UserUpdatePasswordValidator>();
 builder.Services.AddTransient<IValidator<SongAddDto>, SongValidator>();
 builder.Services.AddTransient<IValidator<SavedSongsDto>, SavedSongsValidator>();
 builder.Services.AddTransient<IValidator<SavedAlbumsDto>, SavedAlbumsValidator>();

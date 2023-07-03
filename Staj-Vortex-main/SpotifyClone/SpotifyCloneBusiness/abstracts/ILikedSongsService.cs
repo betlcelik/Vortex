@@ -14,6 +14,8 @@ namespace SpotifyClone.Business.abstracts
         IResult Insert(LikedSongsDto likedSongs);
         IDataResult<IEnumerable<LikedSongsDto>> GetAllByUserId(int userId);
         IDataResult<IEnumerable<LikedSongsDto>> GetAllBySongId(int songId);
+        IDataResult<IEnumerable<LikedSongsDto>> GetAllByUserIdAndGenreId(int userId, int genreId);
+        int GetMostLikedSongGenreIdByUserId(int userId);
     }
 }
 

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Spotify.core.dtos.MembershipDto;
-using Spotify.core.dtos.PlaylistDto;
 using Spotify.core.dtos.UserDto;
 using Spotify.entities.concretes;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
-using SpotifyClone.Core.dtos.MembershipDto;
 using SpotifyClone.Core.dtos.UserDto;
 using SpotifyClone.Core.dtos.UserStatisticDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
@@ -119,6 +117,7 @@ namespace SpotifyClone.Business.concretes
 
             UserStatisticDto userStatisticDto = new UserStatisticDto();
             userStatisticDto.userId = user.id;
+            userStatisticDto.mostLikedGenreId = -1;
             userStatisticDto.numberOfPlaylists = 0;
             userStatisticDto.numberOfLikedSongs = 0;
             _userStatisticService.AddUserStatistics(userStatisticDto);
@@ -137,7 +136,7 @@ namespace SpotifyClone.Business.concretes
           
         }
 
-        IDataResult<UserDto> IUserService.LogIn(UserLoginDto userLoginDto)
+        public IDataResult<UserDto> LogIn(UserLoginDto userLoginDto)
         {
 
             if(userLoginDto != null)
@@ -168,7 +167,7 @@ namespace SpotifyClone.Business.concretes
            
         }
 
-        IResult IUserService.UpdatePassword(UserUpdatePasswordDto user)
+       public IResult UpdatePassword(UserUpdatePasswordDto user)
         {
             var _user= _userRepository.GetById(user.id);
             if(user != null && _user!= null)
@@ -189,6 +188,16 @@ namespace SpotifyClone.Business.concretes
             }
 
             return new ErrorResult("Eksik ya da hatalı bilgi");
+        }
+
+        public IDataResult<UserDto> GetByEmail(string _email)
+        {
+            return new SuccessDataResult<UserDto>(_userRepository.Get(user=> user.email.Equals(_email)));
+        }
+
+        public IDataResult<UserDto> GetByUserName(string userName)
+        {
+            return new SuccessDataResult<UserDto>(_userRepository.Get(user => user.userName.Equals(userName)));
         }
     }
 }

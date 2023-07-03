@@ -1,9 +1,12 @@
 ﻿
 namespace SpotifyClone.Core.dtos.UserDto
 {
-   public class UserUpdatePasswordDto
+    public class UserUpdatePasswordDto 
     {
-       
+        public UserUpdatePasswordDto()
+        {
+            
+        }
         public int id { get; set; }
         public string oldPassword { get; set; }
         public string newPassword { get; set; }

@@ -6,8 +6,9 @@ using SpotifyClone.Core.concretes;
 
 namespace SpotifyClone.Core.Validation
 {
-	public class UserValidator : AbstractValidator<UserAddDto>
+	public abstract class UserValidator<T> : AbstractValidator<T> where T : UserDto
 	{
+        /*
 		public UserValidator()
 		{
 	
@@ -21,7 +22,22 @@ namespace SpotifyClone.Core.Validation
 			RuleFor(user => user.email).NotNull().EmailAddress();
 			RuleFor(user => user.countryId).NotNull();
 
-		}
-	}
+		}*/
+        public UserValidator()
+        {
+
+           
+            RuleFor(user => user.password)
+                .NotNull()
+                .MinimumLength(6)
+                .Matches("[A-Z]").WithMessage("Şifre en az bir büyük harf içermelidir.")
+                .Matches("[a-z]").WithMessage("Şifre en az bir küçük harf içermelidir.")
+                .Matches("[0-9]").WithMessage("Şifre en az bir rakam içermelidir.");
+            
+
+        }
+
+
+    }
 }
 

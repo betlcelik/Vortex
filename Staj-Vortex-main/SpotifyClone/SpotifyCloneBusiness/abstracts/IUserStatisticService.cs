@@ -20,5 +20,7 @@ namespace SpotifyClone.Business.abstracts
         IResult DecraseLikedSongs(int userId);
         IResult IncreasePlayLists(int userId);
         IResult DecrasePlayLists(int userId);
+
+        
     }
 }

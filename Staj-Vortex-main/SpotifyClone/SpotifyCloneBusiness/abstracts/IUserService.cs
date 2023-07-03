@@ -10,10 +10,12 @@ namespace SpotifyClone.Business.abstracts
 	{
         IDataResult<IEnumerable<UserDto>> GetAll();
         IDataResult<IEnumerable<UserDto>> GetAllActiveUsers();
-        //getactiveusers
+        
         IResult Delete(UserDto user);
         IResult DeleteById(int id);
         IDataResult<UserDto> GetById(int id);
+        IDataResult<UserDto> GetByEmail(string email);
+        IDataResult<UserDto> GetByUserName(string userName);
         IResult Insert(UserDto user);
         IResult Update(UserDto user);
         IResult UpdatePassword(UserUpdatePasswordDto user);

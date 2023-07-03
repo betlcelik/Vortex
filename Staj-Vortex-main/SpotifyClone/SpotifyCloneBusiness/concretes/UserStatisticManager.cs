@@ -22,7 +22,6 @@ namespace SpotifyClone.Business.concretes
         {
             _userStatisticRepository = userStatisticRepository;
             _membershipService = membershipService;
-            
         }
 
         public IResult AddUserStatistics(UserStatisticDto addUserStatisticDto)
@@ -128,6 +127,8 @@ namespace SpotifyClone.Business.concretes
             return new SuccessDataResult<IEnumerable<UserStatisticDto>>(userStatistics, "Kullanıcı istatistikleri listeleniyor");
 
         }
+
+       
     }
 
         
