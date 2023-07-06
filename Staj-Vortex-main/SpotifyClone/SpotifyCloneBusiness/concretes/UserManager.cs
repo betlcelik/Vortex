@@ -117,7 +117,7 @@ namespace SpotifyClone.Business.concretes
 
             UserStatisticDto userStatisticDto = new UserStatisticDto();
             userStatisticDto.userId = user.id;
-            userStatisticDto.mostLikedGenreId = -1;
+           // userStatisticDto.mostLikedGenreId = -1;
             userStatisticDto.numberOfPlaylists = 0;
             userStatisticDto.numberOfLikedSongs = 0;
             _userStatisticService.AddUserStatistics(userStatisticDto);

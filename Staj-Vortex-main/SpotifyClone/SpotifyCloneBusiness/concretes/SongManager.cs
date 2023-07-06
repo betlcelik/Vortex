@@ -21,16 +21,16 @@ namespace SpotifyClone.Business.concretes
         private readonly IUserService _userService;
         private readonly IPlaylistSongService _playlistSongService;
         private readonly ILikedSongsService _likedSongsService;
-      
+        private readonly IGenreService _genreService;
 
-        public SongManager(ISongRepository songRepository, ICountryService countryService, IUserService userService,IPlaylistSongService playlistSongService, ILikedSongsService likedSongsService)
+        public SongManager(ISongRepository songRepository, ICountryService countryService, IUserService userService,IPlaylistSongService playlistSongService, ILikedSongsService likedSongsService, IGenreService genreService)
         {
             _songRepository = songRepository;
             _countryService = countryService;
             _userService = userService;
             _playlistSongService = playlistSongService;
             _likedSongsService = likedSongsService;
-           
+            _genreService = genreService;
         }
 
         public IResult Delete(SongDto song)
@@ -42,14 +42,12 @@ namespace SpotifyClone.Business.concretes
         public IResult DeleteById(int id)
         {       
             
-
             var song= _songRepository.GetById(id);
             var playlistsongs=_playlistSongService.GetAllBySongId(song.id).Data;
             var likedSongs = _likedSongsService.GetAllBySongId(song.id).Data;
 
             foreach (var likedSong in likedSongs)
-            {
-               
+            {  
                 _likedSongsService.DeleteById(likedSong.id);
             }
 

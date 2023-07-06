@@ -39,6 +39,7 @@ namespace SpotifyClone.Business.concretes
 
         public IDataResult<GenreDto> GetById(int id)
         {
+            
             return new SuccessDataResult<GenreDto>(_genreRepository.GetById(id));
         }
 

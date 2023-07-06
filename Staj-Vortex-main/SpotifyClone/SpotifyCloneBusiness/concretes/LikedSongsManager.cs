@@ -16,15 +16,11 @@ namespace SpotifyClone.Business.concretes
     {
         private readonly ILikedSongsRepository _likedSongsRepository;
         private readonly IUserStatisticService _userStatisticService;
-        private readonly IGenreService _genreService;
-        
 
-        public LikedSongsManager(ILikedSongsRepository likedSongsRepository, IUserStatisticService userStatisticService, IGenreService genreService)
+        public LikedSongsManager(ILikedSongsRepository likedSongsRepository, IUserStatisticService userStatisticService)
         {
             _likedSongsRepository = likedSongsRepository;
             _userStatisticService = userStatisticService;
-            _genreService = genreService;
-           
         }
 
         public IResult Delete(LikedSongsWithoutIdDto likedSong)
@@ -60,47 +56,12 @@ namespace SpotifyClone.Business.concretes
             return new SuccessDataResult<IEnumerable<LikedSongsDto>>(_likedSongsRepository.GetAll(likedSong => likedSong.userId == userId));
         }
 
-        public IDataResult<IEnumerable<LikedSongsDto>> GetAllByUserIdAndGenreId(int userId, int genreId)
-        {   
-            
-            var likedSongs = GetAllByUserId(userId).Data;
-            List<LikedSongsDto> likedSongsByGenreId = null; 
-            foreach(var likedSong in likedSongs)
-            {
-                
-            }
-
-            
-            return new SuccessDataResult<IEnumerable<LikedSongsDto>> (likedSongsByGenreId);
-        }
+       
 
         public IDataResult<LikedSongsDto> GetById(int id)
         {
             return new SuccessDataResult<LikedSongsDto>(_likedSongsRepository.GetById(id));
         }
-
-        public int GetMostLikedSongGenreIdByUserId(int userId)
-        {
-            int mostLikedCount = 0;
-            int mostLikedGenreId = -1;
-            var genres = _genreService.GetAll().Data;
-            foreach ( var genre in genres )
-            {
-                var songsById = GetAllByUserIdAndGenreId(userId, genre.id).Data;
-                if (songsById != null )
-                {
-                    if(songsById.Count() > mostLikedCount)
-                    {
-                        mostLikedCount = songsById.Count();
-                        mostLikedGenreId=genre.id;
-                    }
-
-                }
-            }
-            return mostLikedGenreId;
-            
-        }
-
 
         public IResult Insert(LikedSongsDto likedSong)
         {

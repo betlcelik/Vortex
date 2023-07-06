@@ -18,10 +18,12 @@ namespace SpotifyClone.Business.concretes
     {
         private readonly IUserStatisticRepository _userStatisticRepository;
         private readonly IMembershipService _membershipService;
+       
         public UserStatisticManager(IUserStatisticRepository userStatisticRepository,IMembershipService membershipService)
         {
             _userStatisticRepository = userStatisticRepository;
             _membershipService = membershipService;
+           
         }
 
         public IResult AddUserStatistics(UserStatisticDto addUserStatisticDto)
@@ -128,7 +130,6 @@ namespace SpotifyClone.Business.concretes
 
         }
 
-       
     }
 
         
