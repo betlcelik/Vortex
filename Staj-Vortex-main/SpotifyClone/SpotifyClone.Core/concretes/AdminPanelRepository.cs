@@ -17,6 +17,16 @@ namespace SpotifyClone.Core.concretes
                 _context = context;
         }
 
+        public int GetNumberOfAlbums()
+        {
+            return _context.Albums.Count();
+        }
+
+        public int GetNumberOfArtists()
+        {
+            return _context.Artists.Count();
+        }
+
         public int GetNumberOfSongs()
         {
             return _context.Songs.Count();

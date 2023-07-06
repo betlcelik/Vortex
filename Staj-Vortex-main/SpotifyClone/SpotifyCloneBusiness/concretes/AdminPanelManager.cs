@@ -44,6 +44,8 @@ namespace SpotifyClone.Business.concretes
             _statisticDto.numberOfRegisteredUsers = _adminPanelRepository.GetRegisteredUsersCount(); 
             _statisticDto.numberOfPaidMembership=_adminPanelRepository.GetPaidUsersCount();
             _statisticDto.numberOfSongs=_adminPanelRepository.GetNumberOfSongs();
+            _statisticDto.numberOfAlbums=_adminPanelRepository.GetNumberOfAlbums();
+            _statisticDto.numberOfArtists=_adminPanelRepository.GetNumberOfArtists();
             return new SuccessDataResult<SystemStatisticDto>(_statisticDto,"Sistem istatistikleri listeleniyor");
         }
 

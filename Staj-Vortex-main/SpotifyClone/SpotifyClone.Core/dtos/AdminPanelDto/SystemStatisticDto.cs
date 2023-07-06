@@ -11,6 +11,8 @@ namespace SpotifyClone.Core.dtos.AdminPanelDto
         public int numberOfRegisteredUsers  {get; set; }
         public int numberOfPaidMembership { get; set; }
         public int numberOfSongs { get; set; }
+        public int numberOfAlbums { get; set; }
+        public int numberOfArtists { get; set;}
 
     }
 }

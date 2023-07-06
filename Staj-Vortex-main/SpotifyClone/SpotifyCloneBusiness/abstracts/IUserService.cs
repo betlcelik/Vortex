@@ -10,7 +10,9 @@ namespace SpotifyClone.Business.abstracts
 	{
         IDataResult<IEnumerable<UserDto>> GetAll();
         IDataResult<IEnumerable<UserDto>> GetAllActiveUsers();
-        
+        IDataResult<IEnumerable<UserDto>> GetAllFreeUsers();
+        IDataResult<IEnumerable<UserDto>> GetAllPremiumUsers();
+        IDataResult<IEnumerable<UserDto>> GetAllStudentUsers();
         IResult Delete(UserDto user);
         IResult DeleteById(int id);
         IDataResult<UserDto> GetById(int id);

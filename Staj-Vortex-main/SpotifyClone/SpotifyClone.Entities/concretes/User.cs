@@ -24,7 +24,7 @@ namespace Spotify.entities.concretes
         public string? device { get; set; }
         public string? image { get; set; }
         public string state { get; set; }
-        //getactiveusers
+       
     }
 }
 

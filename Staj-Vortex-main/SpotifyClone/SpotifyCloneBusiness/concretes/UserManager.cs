@@ -160,10 +160,6 @@ namespace SpotifyClone.Business.concretes
             {
                 return new ErrorDataResult<UserDto>(null, "Gerekli alanları dolduruğunuzdan emin olun ");
             }
-            
-
-            
-
            
         }
 
@@ -198,6 +194,39 @@ namespace SpotifyClone.Business.concretes
         public IDataResult<UserDto> GetByUserName(string userName)
         {
             return new SuccessDataResult<UserDto>(_userRepository.Get(user => user.userName.Equals(userName)));
+        }
+
+        public IDataResult<IEnumerable<UserDto>> GetAllFreeUsers()
+        {
+            var freeMemberships= _membershipService.GetAllFreeMemberships().Data.ToList();
+            List<UserDto> freeUsers = new List<UserDto>();
+            foreach (var freeMembership in freeMemberships)
+            {
+                freeUsers.Add(GetById(freeMembership.userId).Data);
+            }
+            return new SuccessDataResult<IEnumerable<UserDto>>(freeUsers,"Free Kullancılar Listeleniyor");
+        }
+
+        public IDataResult<IEnumerable<UserDto>> GetAllPremiumUsers()
+        {
+            var premiumMemberships=_membershipService.GetAllPremimumMemberships().Data.ToList();
+            List<UserDto> premiumUsers = new List<UserDto>();
+            foreach(var premiumMembership in premiumMemberships)
+            {
+                premiumUsers.Add(GetById(premiumMembership.userId).Data);
+            }
+            return new SuccessDataResult<IEnumerable<UserDto>>(premiumUsers,"Premium Kullanıcılar Listeleniyor");
+        }
+
+        public IDataResult<IEnumerable<UserDto>> GetAllStudentUsers()
+        {
+            var studentMemberships=_membershipService.GetAllStudentMemberships().Data.ToList(); 
+            List<UserDto> studentUsers = new List<UserDto>();
+            foreach ( var studentMembership in studentMemberships)
+            {
+                studentUsers.Add(GetById(studentMembership.userId).Data);
+            }
+            return new SuccessDataResult<IEnumerable<UserDto>>(studentUsers, "Öğrenci Kullanıcılar Listeleniyor");
         }
     }
 }

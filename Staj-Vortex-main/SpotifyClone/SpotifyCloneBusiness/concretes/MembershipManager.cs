@@ -89,6 +89,21 @@ namespace SpotifyClone.Business.concretes
             return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(), "Kullanıcılar listelendi.");
         }
 
+        public IDataResult<IEnumerable<MembershipDto>> GetAllFreeMemberships()
+        {
+            return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(membership => membership.membershipTypeId == 1), "Free Üyelikler Listeleniyor");
+        }
+
+        public IDataResult<IEnumerable<MembershipDto>> GetAllPremimumMemberships()
+        {
+            return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(membership => membership.membershipTypeId != 1),"Premium Üyelikler Listeleniyor");
+        }
+
+        public IDataResult<IEnumerable<MembershipDto>> GetAllStudentMemberships()
+        {
+            return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(membership => membership.membershipTypeId == 3), "Öğrenci Üyelikleri Listeleniyor");
+        }
+
         public IDataResult<MembershipDto> GetById(int id)
         {
             return new SuccessDataResult<MembershipDto>(_membershipRepository.GetById(id));
@@ -147,7 +162,7 @@ namespace SpotifyClone.Business.concretes
             membershipPaymentDto.state = "Ödendi";
             _paymentService.Insert(membershipPaymentDto);
             Update(member);
-            return new SuccessResult(randomNumber + "Ödeme işlemi onaylandı . Tutar : " + membershipType.price);
+            return new SuccessResult("Ödeme işlemi onaylandı . Tutar : " + membershipType.price);
 
            
         }

@@ -44,7 +44,38 @@ namespace SpotifyClone.API.Controllers
             }
             return BadRequest(result);
         }
-        //getactiveusers
+
+        [HttpGet]
+        public IActionResult GetAllFreeUsers()
+        {
+            var result=_userService.GetAllFreeUsers();
+            if (result.Success)
+            {
+                return Ok(result);
+
+            }
+            return BadRequest(result);
+        }
+        [HttpGet]
+        public IActionResult GetAllPremiumUsers()
+        {
+            var result= _userService.GetAllPremiumUsers();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet]
+        public IActionResult GetAllStudentUsers()
+        {
+            var result=_userService.GetAllStudentUsers();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
         [HttpPost]
         public IActionResult Delete([FromBody] UserAddDto user) {
