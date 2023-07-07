@@ -13,6 +13,7 @@ using SpotifyClone.Core.dtos.MembershipDto;
 using SpotifyClone.Core.dtos.PaymentDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
 using SpotifyClone.Core.Utilities.Results.Concretes;
+using SpotifyClone.Entities.abstracts;
 using SpotifyClone.Entities.concretes;
 
 namespace SpotifyClone.Business.concretes
@@ -20,14 +21,13 @@ namespace SpotifyClone.Business.concretes
 	public class MembershipManager : IMembershipService
 	{
         private readonly IMembershipRepository _membershipRepository;
-        private readonly IMembershipTypeRepository _membershipTypeRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IMembershipTypeService _membershipTypeService;
         private readonly IPaymentService _paymentService;
         
-		public MembershipManager(IMembershipRepository membershipRepository, IMembershipTypeRepository membershipTypeRepository,IPaymentService paymentService)
+		public MembershipManager(IMembershipRepository membershipRepository, IMembershipTypeService membershipTypeService,IPaymentService paymentService)
 		{
             _membershipRepository = membershipRepository;
-            _membershipTypeRepository = membershipTypeRepository;
+            _membershipTypeService = membershipTypeService; 
             _paymentService = paymentService;
             
         }
@@ -37,7 +37,8 @@ namespace SpotifyClone.Business.concretes
             DateTime startDateTime = DateTime.Now.ToUniversalTime().Date;
             DateTime endDateTime = startDateTime.AddMonths(1).ToUniversalTime();
             var member = GetByUserId(membershipPaymentDto.userId).Data.FirstOrDefault();
-            MembershipType membershipType = _membershipTypeRepository.GetById(membershipPaymentDto.membershipTypeId);
+            var membershipType = _membershipTypeService.GetById(membershipPaymentDto.membershipTypeId).Data;
+          
             if ( member == null)
             {
                    //ücretsiz üyelik oluşturuluyor değiştirme yapılmalı 
@@ -109,6 +110,12 @@ namespace SpotifyClone.Business.concretes
             return new SuccessDataResult<MembershipDto>(_membershipRepository.GetById(id));
         }
 
+        public IDataResult<IEnumerable<MembershipDto>> GetByMembershipTypeId(int membershipTypeId)
+        {
+           return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(membership => membership.membershipTypeId == membershipTypeId),"Üyelikler listeleniyor");
+            throw new NotImplementedException();
+        }
+
         public IDataResult<IEnumerable<MembershipDto>> GetByUserId(int userId)
         {
 
@@ -120,6 +127,31 @@ namespace SpotifyClone.Business.concretes
            
             _membershipRepository.Insert(membership);
             return new SuccessResult("Kullanıcı eklendi.");
+        }
+
+        public IResult RenewMembership(PaymentDto membershipPaymentDto)
+        {
+            var membership = GetByUserId(membershipPaymentDto.userId).Data.FirstOrDefault();
+            DateTime startDateTime = membership.endDate;
+            DateTime endDateTime = startDateTime.AddMonths(1).ToUniversalTime();
+           //düzeltilcek kullanıcnın memberhsip type idsi gelmeli
+
+            var membershipType = _membershipTypeService.GetById(membership.membershipTypeId).Data;
+            
+           
+            string cardNo=membershipPaymentDto.cardNo;
+            membershipPaymentDto.paymentDate = startDateTime;
+            membershipPaymentDto.cardNo = cardNo.Substring(0, 4) + new string('*', cardNo.Length - 8) + cardNo.Substring(cardNo.Length - 4);
+            membershipPaymentDto.cvc = "**" + membershipPaymentDto.cvc[2];
+            membershipPaymentDto.price = membershipType.price;
+            membershipPaymentDto.state = "Ödendi";
+            membershipPaymentDto.membershipTypeId = membershipType.id;
+            _paymentService.Insert(membershipPaymentDto);
+
+            membership.startDate= startDateTime;
+            membership.endDate= endDateTime;
+            Update(membership);
+            return new SuccessResult("Üyelik yenilendi");
         }
 
         public IResult Update(MembershipDto membership)
@@ -136,7 +168,7 @@ namespace SpotifyClone.Business.concretes
             DateTime endDateTime = startDateTime.AddMonths(1).ToUniversalTime();
             string cardNo;
             var member = GetByUserId(membershipPaymentDto.userId).Data.FirstOrDefault();
-            MembershipType membershipType = _membershipTypeRepository.GetById(membershipPaymentDto.membershipTypeId);
+            var membershipType = _membershipTypeService.GetById(membershipPaymentDto.membershipTypeId).Data;
             member.startDate = startDateTime;
             member.endDate = endDateTime;
             member.membershipTypeId = membershipPaymentDto.membershipTypeId;

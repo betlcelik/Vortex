@@ -31,8 +31,15 @@ namespace SpotifyClone.Business.concretes
         public IResult CheckIsMembershipFinished(int userId)
         {
             DateTime currentDateTime = DateTime.Now.ToUniversalTime().Date;
-            //var membership=_membershipService.
-            return null;
+            var membership = _membershipService.GetByUserId(userId).Data.FirstOrDefault();
+            if(membership.endDate == currentDateTime)
+            {
+                membership.membershipTypeId = 1;
+                membership.startDate = currentDateTime;
+                membership.endDate = DateTime.MaxValue;
+                return new SuccessResult("User membership has been changed to free membership");
+            }
+            return new SuccessResult();
         }
     }
 }

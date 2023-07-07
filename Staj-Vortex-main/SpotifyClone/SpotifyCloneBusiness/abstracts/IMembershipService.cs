@@ -12,6 +12,7 @@ namespace SpotifyClone.Business.abstracts
         IDataResult<IEnumerable<MembershipDto>> GetAllFreeMemberships();
         IDataResult<IEnumerable<MembershipDto>> GetAllPremimumMemberships();
         IDataResult<IEnumerable<MembershipDto>> GetAllStudentMemberships();
+        IDataResult<IEnumerable<MembershipDto>> GetByMembershipTypeId(int membershipTypeId);
         IResult Delete(MembershipDto membership);
         IResult DeleteById(int id);
         IDataResult<MembershipDto> GetById(int id);
@@ -19,6 +20,7 @@ namespace SpotifyClone.Business.abstracts
         IResult Insert(MembershipDto membership);
         IResult Update(MembershipDto membership);
         IResult BuyMembership(PaymentDto membershipPaymentDto);
+        IResult RenewMembership(PaymentDto membershipPaymentDto);
         IResult UpgradeMembership(PaymentDto membershipPaymentDto);
         IResult DowngradeMembership(int userId);
        

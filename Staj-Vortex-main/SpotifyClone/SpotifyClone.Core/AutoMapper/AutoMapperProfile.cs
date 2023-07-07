@@ -36,6 +36,7 @@ namespace SpotifyClone.Core.AutoMapper
             CreateMap<UserStatisticDto,AddUserStatisticDto>().ReverseMap();
             CreateMap<LikedSongsDto,LikedSongsWithoutIdDto>().ReverseMap();
             CreateMap<PaymentDto, PaymentAddDto>().ReverseMap();
+            CreateMap<PaymentDto,PaymentRenewMembershipDto>().ReverseMap();
 
 
 

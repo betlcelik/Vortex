@@ -228,6 +228,17 @@ namespace SpotifyClone.Business.concretes
             }
             return new SuccessDataResult<IEnumerable<UserDto>>(studentUsers, "Öğrenci Kullanıcılar Listeleniyor");
         }
+
+        public IDataResult<IEnumerable<UserDto>> GetUsersByMembershipTypeId(int membershipTypeId)
+        {
+            var memberships=_membershipService.GetByMembershipTypeId(membershipTypeId).Data.ToList();
+            List<UserDto> users= new List<UserDto>();
+            foreach ( var membership in memberships)
+            {
+                users.Add(GetById(membership.userId).Data);
+            }
+            return new SuccessDataResult<IEnumerable<UserDto>>(users, "Kullanıcılar listeleniyor");
+        }
     }
 }
 
