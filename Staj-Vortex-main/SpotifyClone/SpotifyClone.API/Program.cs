@@ -70,6 +70,7 @@ builder.Services.AddScoped<IAdminPanelService,AdminPanelManager>();
 builder.Services.AddScoped<IAdminPanelRepository, AdminPanelRepository>();
 builder.Services.AddScoped<IPaymentService,PaymentManager>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPremiumUserMembershipControlService,PremiumUserMembershipControllerManager>();
 
 builder.Services.AddControllers().AddFluentValidation();
 builder.Services.AddFluentValidationAutoValidation();
