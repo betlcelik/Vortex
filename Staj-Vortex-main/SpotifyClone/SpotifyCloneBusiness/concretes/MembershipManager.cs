@@ -3,9 +3,6 @@ using System.Data;
 using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using Spotify.core.dtos.MembershipDto;
-using Spotify.core.dtos.PlaylistDto;
-using Spotify.entities.abstracts;
-using Spotify.entities.concretes;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
 using SpotifyClone.Core.concretes;
@@ -129,12 +126,13 @@ namespace SpotifyClone.Business.concretes
             return new SuccessResult("Kullanıcı eklendi.");
         }
 
+        //düzeltemeler yapılacak ve kontroler eklenecek
         public IResult RenewMembership(PaymentDto membershipPaymentDto)
         {
             var membership = GetByUserId(membershipPaymentDto.userId).Data.FirstOrDefault();
             DateTime startDateTime = membership.endDate;
             DateTime endDateTime = startDateTime.AddMonths(1).ToUniversalTime();
-           //düzeltilcek kullanıcnın memberhsip type idsi gelmeli
+          
 
             var membershipType = _membershipTypeService.GetById(membership.membershipTypeId).Data;
             
@@ -146,7 +144,7 @@ namespace SpotifyClone.Business.concretes
             membershipPaymentDto.price = membershipType.price;
             membershipPaymentDto.state = "Ödendi";
             membershipPaymentDto.membershipTypeId = membershipType.id;
-            _paymentService.Insert(membershipPaymentDto);
+           // _paymentService.Insert(membershipPaymentDto);
 
             membership.startDate= startDateTime;
             membership.endDate= endDateTime;
@@ -162,37 +160,41 @@ namespace SpotifyClone.Business.concretes
 
         public IResult UpgradeMembership(PaymentDto membershipPaymentDto)
         {
-            Random random = new Random();
-            int randomNumber = random.Next(0, 11);
+            //Random random = new Random();
+            //int randomNumber = random.Next(0, 11);
             DateTime startDateTime = DateTime.Now.ToUniversalTime().Date;
             DateTime endDateTime = startDateTime.AddMonths(1).ToUniversalTime();
-            string cardNo;
+            //string cardNo;
             var member = GetByUserId(membershipPaymentDto.userId).Data.FirstOrDefault();
             var membershipType = _membershipTypeService.GetById(membershipPaymentDto.membershipTypeId).Data;
             member.startDate = startDateTime;
             member.endDate = endDateTime;
             member.membershipTypeId = membershipPaymentDto.membershipTypeId;
-            membershipPaymentDto.paymentDate = startDateTime;
-            cardNo= membershipPaymentDto.cardNo;
-            membershipPaymentDto.cardNo = cardNo.Substring(0,4)+ new string('*',cardNo.Length -8 )+ cardNo.Substring(cardNo.Length-4);
-            membershipPaymentDto.cvc = "**" + membershipPaymentDto.cvc[2];
+
             membershipPaymentDto.price = membershipType.price;
 
-            if(randomNumber > 8)
-            {
-                membershipPaymentDto.state = "Limit yetersiz";
-                _paymentService.Insert(membershipPaymentDto);
-                return new ErrorResult("Ödeme işlemi gerçekleştirilemedi : Limit yetersiz");
+            _paymentService.ControlPaymentInformations(membershipPaymentDto, startDateTime);
+            //membershipPaymentDto.paymentDate = startDateTime;
+            //cardNo= membershipPaymentDto.cardNo;
+            //membershipPaymentDto.cardNo = cardNo.Substring(0,4)+ new string('*',cardNo.Length -8 )+ cardNo.Substring(cardNo.Length-4);
+            //membershipPaymentDto.cvc = "**" + membershipPaymentDto.cvc[2];
+            //membershipPaymentDto.price = membershipType.price;
 
-            }
-            if(randomNumber == 1) 
-            {
-                 membershipPaymentDto.state = "Kart Bilgileri Yanlış";
-                _paymentService.Insert(membershipPaymentDto);
-                return new ErrorResult("Ödeme işlemi gerçekleştirilemedi : Kart Bilgileri Yanlış");
-            }
-            membershipPaymentDto.state = "Ödendi";
-            _paymentService.Insert(membershipPaymentDto);
+            /* if(randomNumber > 8)
+             {
+                 membershipPaymentDto.state = "Limit yetersiz";
+                 _paymentService.Insert(membershipPaymentDto);
+                 return new ErrorResult("Ödeme işlemi gerçekleştirilemedi : Limit yetersiz");
+
+             }
+             if(randomNumber == 1) 
+             {
+                  membershipPaymentDto.state = "Kart Bilgileri Yanlış";
+                 _paymentService.Insert(membershipPaymentDto);
+                 return new ErrorResult("Ödeme işlemi gerçekleştirilemedi : Kart Bilgileri Yanlış");
+             }
+             membershipPaymentDto.state = "Ödendi";
+             _paymentService.Insert(membershipPaymentDto);*/
             Update(member);
             return new SuccessResult("Ödeme işlemi onaylandı . Tutar : " + membershipType.price);
 
