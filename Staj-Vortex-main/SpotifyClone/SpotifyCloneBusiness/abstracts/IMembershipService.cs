@@ -19,7 +19,6 @@ namespace SpotifyClone.Business.abstracts
         IDataResult<IEnumerable<MembershipDto>> GetByUserId(int userId);
         IResult Insert(MembershipDto membership);
         IResult Update(MembershipDto membership);
-        IResult BuyMembership(PaymentDto membershipPaymentDto);
         IResult RenewMembership(PaymentDto membershipPaymentDto);
         IResult UpgradeMembership(PaymentDto membershipPaymentDto);
         IResult DowngradeMembership(int userId);

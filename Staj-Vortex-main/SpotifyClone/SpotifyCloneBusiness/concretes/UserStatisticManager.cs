@@ -123,7 +123,7 @@ namespace SpotifyClone.Business.concretes
             var userType=_membershipService.GetByUserId(userId).Data.FirstOrDefault().membershipTypeId;
              if(userType == 1)
              {
-                 return new ErrorDataResult<IEnumerable<UserStatisticDto>>(null,"Kullanıcı istatistikleri sadece ücretli üyelikler için geçerlidir"+userType);
+                 return new ErrorDataResult<IEnumerable<UserStatisticDto>>(null,"Kullanıcı istatistikleri sadece ücretli üyelikler için geçerlidir");
              }
             var userStatistics = _userStatisticRepository.GetAll(userStatistic => userStatistic.userId == userId);
             return new SuccessDataResult<IEnumerable<UserStatisticDto>>(userStatistics, "Kullanıcı istatistikleri listeleniyor");

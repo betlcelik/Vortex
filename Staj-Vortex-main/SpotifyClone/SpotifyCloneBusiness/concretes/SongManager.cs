@@ -21,16 +21,16 @@ namespace SpotifyClone.Business.concretes
         private readonly IUserService _userService;
         private readonly IPlaylistSongService _playlistSongService;
         private readonly ILikedSongsService _likedSongsService;
-        private readonly IGenreService _genreService;
+       
 
-        public SongManager(ISongRepository songRepository, ICountryService countryService, IUserService userService,IPlaylistSongService playlistSongService, ILikedSongsService likedSongsService, IGenreService genreService)
+        public SongManager(ISongRepository songRepository, ICountryService countryService, IUserService userService,IPlaylistSongService playlistSongService, ILikedSongsService likedSongsService)
         {
             _songRepository = songRepository;
             _countryService = countryService;
             _userService = userService;
             _playlistSongService = playlistSongService;
             _likedSongsService = likedSongsService;
-            _genreService = genreService;
+         
         }
 
         public IResult Delete(SongDto song)
@@ -68,7 +68,7 @@ namespace SpotifyClone.Business.concretes
         public IDataResult<IEnumerable<SongDto>> GetAll()
         {
 
-            return new SuccessDataResult<IEnumerable<SongDto>>(_songRepository.GetAll(), "Kullanıcılar listelendi.");
+            return new SuccessDataResult<IEnumerable<SongDto>>(_songRepository.GetAll(), "Şarkılar listelendi.");
         }
 
         public IDataResult<IEnumerable<SongDto>> GetAllByAlbumId(int albumId)

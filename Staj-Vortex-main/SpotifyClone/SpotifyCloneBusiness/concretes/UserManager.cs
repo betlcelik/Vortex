@@ -22,16 +22,16 @@ namespace SpotifyClone.Business.concretes
         private readonly IUserStatisticService _userStatisticService;
         private readonly IPlaylistService _playlistService;
         private readonly ILikedSongsService _likedSongsService;
-        private readonly IPaymentService _paymentService;
+       
 
-        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService,IPlaylistService  playlistService,ILikedSongsService likedSongsService,IPaymentService paymentService)
+        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService,IPlaylistService  playlistService,ILikedSongsService likedSongsService)
 		{
             _userRepository = userRepository;
             _membershipService = membershipService;
             _userStatisticService = userStatisticService;
             _playlistService = playlistService;
             _likedSongsService = likedSongsService;
-            _paymentService = paymentService;
+           
 		}
 
         public IResult Delete(UserDto user)
@@ -78,7 +78,6 @@ namespace SpotifyClone.Business.concretes
 
             user.state = "passive";
             Update(user);
-            // _userRepository.DeleteById(id);
             return new SuccessResult("Kullanıcı silindi.");
         }
 
@@ -117,7 +116,6 @@ namespace SpotifyClone.Business.concretes
 
             UserStatisticDto userStatisticDto = new UserStatisticDto();
             userStatisticDto.userId = user.id;
-           // userStatisticDto.mostLikedGenreId = -1;
             userStatisticDto.numberOfPlaylists = 0;
             userStatisticDto.numberOfLikedSongs = 0;
             _userStatisticService.AddUserStatistics(userStatisticDto);

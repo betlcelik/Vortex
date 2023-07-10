@@ -26,16 +26,15 @@ namespace SpotifyClone.Business.concretes
             _paymentRepository = paymentRepository;
         }
 
-        public IResult ControlPaymentInformations(PaymentDto paymentDto, DateTime startDateTime)
+        public IResult ControlPaymentInformations(PaymentDto paymentDto)
         {
             Random random = new Random();
             int randomNumber = random.Next(0, 11);
 
-            CreatePaymentInformations(paymentDto, startDateTime);
+            CreatePaymentInformations(paymentDto);
 
             if(randomNumber > 7)
             {
-                //öncesinde ödemelerin düzenlendiği fonksiyon çağırılmalı
                 paymentDto.state = "Limit yetersiz";
                 Insert(paymentDto);
                 return new ErrorResult("Ödeme işlemi gerçekleştirilemedi : Limit yetersiz");
@@ -52,17 +51,16 @@ namespace SpotifyClone.Business.concretes
                  Insert(paymentDto);
                 return new SuccessResult("Ödeme işlemi onaylandı . Tutar : " );
             }
-            throw new NotImplementedException();
+          
         }
 
-        public IResult CreatePaymentInformations(PaymentDto paymentDto, DateTime startDateTime)
+        public IResult CreatePaymentInformations(PaymentDto paymentDto)
         {
+            DateTime currentDateTime = DateTime.Now.ToUniversalTime().Date;
             string cardNo = paymentDto.cardNo;
-            paymentDto.paymentDate = startDateTime;
+            paymentDto.paymentDate = currentDateTime;
             paymentDto.cardNo = cardNo.Substring(0, 4) + new string('*', cardNo.Length - 8) + cardNo.Substring(cardNo.Length - 4);
             paymentDto.cvc = "**" + paymentDto.cvc[2];
-            // paymentDto.price = membershipType.price;
-            // paymentDto.state = "Ödendi";
             return new SuccessResult();
         }
 

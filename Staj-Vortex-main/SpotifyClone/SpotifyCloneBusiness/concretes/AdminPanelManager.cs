@@ -28,14 +28,14 @@ namespace SpotifyClone.Business.concretes
         {
             FinancialInformationsDto financialInformationsDto = new FinancialInformationsDto();
             financialInformationsDto.income = _adminPanelRepository.GetTotalIncome();
-            double expenseInTL = financialInformationsDto.expenseInDollar * 24;
+            double expenseInTL = financialInformationsDto.expenseInDollar * 26;
             double profitOrLoss = financialInformationsDto.income - expenseInTL;
             if (expenseInTL > financialInformationsDto.income)
             {
-                return new SuccessResult("Sistem istatistiklerine göre " +(-1 * profitOrLoss).ToString()+ " Türk Lirası zarardasınız" );
+                return new SuccessResult("According to system statistics, you are at a loss of " +(-1 * profitOrLoss).ToString()+ " Turkish lira" );
             }
 
-            return new SuccessResult("Sistem istatistiklerine göre " + (profitOrLoss).ToString() + " Türk Lirası kardasınız");
+            return new SuccessResult("According to system statistics, you are  " + (profitOrLoss).ToString() + " Turkish lira in profit");
         }
 
         public IDataResult<SystemStatisticDto> GetSystemStatiscs()
@@ -54,7 +54,7 @@ namespace SpotifyClone.Business.concretes
             FinancialInformationsDto financialInformationsDto = new FinancialInformationsDto();
             financialInformationsDto.income= _adminPanelRepository.GetTotalIncome();
             double totalIncome=_adminPanelRepository.GetTotalIncome();
-            return new SuccessResult("Sistem Toplam Geliri : " + totalIncome);
+            return new SuccessResult("Sistem Total Income : " + totalIncome);
            
         }
     }

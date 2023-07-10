@@ -37,6 +37,7 @@ namespace SpotifyClone.Business.concretes
                 membership.membershipTypeId = 1;
                 membership.startDate = currentDateTime;
                 membership.endDate = DateTime.MaxValue;
+                _membershipService.Update(membership);
                 return new SuccessResult("User membership has been changed to free membership");
             }
             return new SuccessResult();

@@ -14,16 +14,12 @@ namespace SpotifyClone.Business.concretes
     public class PlaylistSongManager : IPlaylistSongService
     {
         private readonly IPlaylistSongRepository _playlistSongRepository;
-        private readonly IMembershipService _membershipService;
        
 
-        public PlaylistSongManager(IPlaylistSongRepository playlistSongRepository, IMembershipService membershipService
-            )
+        public PlaylistSongManager(IPlaylistSongRepository playlistSongRepository )
         {
             _playlistSongRepository = playlistSongRepository;
-            _membershipService = membershipService;
-           
-           
+         
         }
 
         public IResult Delete(PlaylistSongDto playlistSong)
