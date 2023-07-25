@@ -101,16 +101,6 @@ namespace SpotifyClone.API.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost]
-        public IActionResult BuyMembership([FromBody] PaymentAddDto membershipPaymentDto)
-        {
-            var result = _membershipService.BuyMembership(_mapper.Map<PaymentDto>(membershipPaymentDto));
-            if(result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
 
         // *
         [HttpPost]

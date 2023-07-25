@@ -105,7 +105,7 @@ namespace SpotifyClone.Business.concretes
             var membershipType = _membershipTypeService.GetById(membership.membershipTypeId).Data;
             membershipPaymentDto.membershipTypeId = membership.membershipTypeId;
             membershipPaymentDto.price = membershipType.price;
-            _paymentService.ControlPaymentInformations(membershipPaymentDto,startDateTime);
+            _paymentService.ControlPaymentInformations(membershipPaymentDto);
 
             membership.startDate= startDateTime;
             membership.endDate= startDateTime.AddMonths(1).ToUniversalTime();
@@ -131,7 +131,7 @@ namespace SpotifyClone.Business.concretes
 
             membershipPaymentDto.price = membershipType.price;
 
-            _paymentService.ControlPaymentInformations(membershipPaymentDto, startDateTime);
+            _paymentService.ControlPaymentInformations(membershipPaymentDto);
             Update(member);
             return new SuccessResult("Ödeme işlemi onaylandı . Tutar : " + membershipType.price);
 
