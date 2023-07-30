@@ -106,16 +106,12 @@ namespace SpotifyClone.Business.concretes
                
                 if (marketList.Contains(userCountryId.ToString()))
                 {
-                   songsToList= songsToList.Append(song).ToList();
-                    //return new SuccessDataResult<IEnumerable<SongDto>>(songsToList, "Şarkılar Listeleniyor .......... "+song.id);
+                   songsToList= songsToList.Append(song).ToList();                
                 }
             }
 
-            foreach (SongDto song in songsToList)
-            {
-                count++;
-            }
-            return new SuccessDataResult<IEnumerable<SongDto>>(songsToList,"Şarkılar Listeleniyor"+count+"country " +userCountryId);
+          
+            return new SuccessDataResult<IEnumerable<SongDto>>(songsToList,"Şarkılar Listeleniyor");
         }
 
         public IResult Insert(SongDto song)
