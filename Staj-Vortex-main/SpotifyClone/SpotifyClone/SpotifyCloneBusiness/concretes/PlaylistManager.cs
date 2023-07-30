@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Immutable;
-using System.Linq.Expressions;
+﻿
 using Spotify.core.dtos.PlaylistDto;
-using Spotify.core.dtos.SongDto;
-using Spotify.entities.abstracts;
-using Spotify.entities.concretes;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
-using SpotifyClone.Core.concretes;
 using SpotifyClone.Core.dtos.PlaylistSongDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
 using SpotifyClone.Core.Utilities.Results.Concretes;
@@ -36,7 +30,7 @@ namespace SpotifyClone.Business.concretes
         {
             _playlistRepository.Delete(playlist);
             _userStatisticService.DecrasePlayLists(playlist.userId);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Playlist silindi.");
         }
 
         public IResult DeleteById(int id)
@@ -50,12 +44,12 @@ namespace SpotifyClone.Business.concretes
             }
             _userStatisticService.DecrasePlayLists(userId);
             _playlistRepository.DeleteById(id);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Playlist silindi.");
         }
 
         public IDataResult<IEnumerable<PlaylistDto>> GetAll()
         {
-            return new SuccessDataResult<IEnumerable<PlaylistDto>>(_playlistRepository.GetAll(), "Kullanıcılar listelendi.");
+            return new SuccessDataResult<IEnumerable<PlaylistDto>>(_playlistRepository.GetAll(), "Playlistler listelendi.");
         }
 
         public IDataResult<PlaylistDto> GetById(int id)
@@ -83,13 +77,13 @@ namespace SpotifyClone.Business.concretes
                 {
                     return new ErrorResult("Maximum Playlist Sınırına Ulaştınız!!");
                 }
-                else
+                /*else
                 {
                     playlist.creationDate= createionDateTime;
                     _playlistRepository.Insert(playlist);
                     _userStatisticService.IncreasePlayLists(playlist.userId);
                     return new SuccessResult("Playlist eklendi.");
-                }
+                }*/
             }
             playlist.creationDate = createionDateTime;
             _playlistRepository.Insert(playlist);
@@ -119,10 +113,6 @@ namespace SpotifyClone.Business.concretes
                 {
                     return new ErrorResult("Playlist Şarkı Sayısında Maximum Sınıra Ulaştınız !!");
                 }
-                _playlistSongService.Insert(playlistSongDto);
-                playlist.numberOfSongs++;
-                Update(playlist);
-                return new SuccessResult("Şarkı eklendi");
 
             }
 
@@ -135,8 +125,6 @@ namespace SpotifyClone.Business.concretes
         public IDataResult<IEnumerable<PlaylistSongDto>> GetBySongId(int songID)
         {
             var playlists=_playlistSongService.GetAllBySongId(songID).Data;
-            
-            
             return new SuccessDataResult<IEnumerable<PlaylistSongDto>>(playlists,"Şarkının bulunduğu playlistler listeleniyor");
             
         }

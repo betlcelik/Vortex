@@ -12,5 +12,7 @@ namespace SpotifyClone.Business.abstracts
     public interface IPaymentService
     {
         IResult Insert(PaymentDto paymentDto);
+        IResult ControlPaymentInformations(PaymentDto paymentDto);
+        IResult CreatePaymentInformations(PaymentDto paymentDto);
     }
 }

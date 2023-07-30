@@ -2,13 +2,8 @@
 using System.Text.Json;
 using Spotify.core.dtos.CountryDto;
 using Spotify.core.dtos.SongDto;
-using Spotify.core.dtos.UserDto;
-using Spotify.entities.abstracts;
-using Spotify.entities.concretes;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
-using SpotifyClone.Core.concretes;
-using SpotifyClone.Core.dtos.PlaylistSongDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
 using SpotifyClone.Core.Utilities.Results.Concretes;
 
@@ -21,7 +16,7 @@ namespace SpotifyClone.Business.concretes
         private readonly IUserService _userService;
         private readonly IPlaylistSongService _playlistSongService;
         private readonly ILikedSongsService _likedSongsService;
-      
+       
 
         public SongManager(ISongRepository songRepository, ICountryService countryService, IUserService userService,IPlaylistSongService playlistSongService, ILikedSongsService likedSongsService)
         {
@@ -30,7 +25,7 @@ namespace SpotifyClone.Business.concretes
             _userService = userService;
             _playlistSongService = playlistSongService;
             _likedSongsService = likedSongsService;
-           
+         
         }
 
         public IResult Delete(SongDto song)
@@ -42,14 +37,12 @@ namespace SpotifyClone.Business.concretes
         public IResult DeleteById(int id)
         {       
             
-
             var song= _songRepository.GetById(id);
             var playlistsongs=_playlistSongService.GetAllBySongId(song.id).Data;
             var likedSongs = _likedSongsService.GetAllBySongId(song.id).Data;
 
             foreach (var likedSong in likedSongs)
-            {
-               
+            {  
                 _likedSongsService.DeleteById(likedSong.id);
             }
 
@@ -70,7 +63,7 @@ namespace SpotifyClone.Business.concretes
         public IDataResult<IEnumerable<SongDto>> GetAll()
         {
 
-            return new SuccessDataResult<IEnumerable<SongDto>>(_songRepository.GetAll(), "Kullanıcılar listelendi.");
+            return new SuccessDataResult<IEnumerable<SongDto>>(_songRepository.GetAll(), "Şarkılar listelendi.");
         }
 
         public IDataResult<IEnumerable<SongDto>> GetAllByAlbumId(int albumId)
@@ -108,16 +101,12 @@ namespace SpotifyClone.Business.concretes
                
                 if (marketList.Contains(userCountryId.ToString()))
                 {
-                   songsToList= songsToList.Append(song).ToList();
-                    //return new SuccessDataResult<IEnumerable<SongDto>>(songsToList, "Şarkılar Listeleniyor .......... "+song.id);
+                   songsToList= songsToList.Append(song).ToList();                
                 }
             }
 
-            foreach (SongDto song in songsToList)
-            {
-                count++;
-            }
-            return new SuccessDataResult<IEnumerable<SongDto>>(songsToList,"Şarkılar Listeleniyor"+count+"country " +userCountryId);
+          
+            return new SuccessDataResult<IEnumerable<SongDto>>(songsToList,"Şarkılar Listeleniyor");
         }
 
         public IResult Insert(SongDto song)

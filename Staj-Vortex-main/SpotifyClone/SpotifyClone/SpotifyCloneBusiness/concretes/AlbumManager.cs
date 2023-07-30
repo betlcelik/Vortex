@@ -44,7 +44,7 @@ namespace SpotifyClone.Business.concretes
 
         public IDataResult<IEnumerable<AlbumDto>> GetAll()
         {
-            return new SuccessDataResult<IEnumerable<AlbumDto>>(_albumRepository.GetAll(), "Kullanıcılar listelendi.");
+            return new SuccessDataResult<IEnumerable<AlbumDto>>(_albumRepository.GetAll(), "Albümler listelendi.");
         }
 
         public IDataResult<IEnumerable<AlbumDto>> GetAllByArtistId(int artistId)

@@ -1,11 +1,7 @@
 ﻿using System;
 using Spotify.core.dtos.CountryDto;
-using Spotify.core.dtos.GenreDto;
-using Spotify.entities.abstracts;
-using Spotify.entities.concretes;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
-using SpotifyClone.Core.concretes;
 using SpotifyClone.Core.Utilities.Results.Abstract;
 using SpotifyClone.Core.Utilities.Results.Concretes;
 
@@ -23,18 +19,18 @@ namespace SpotifyClone.Business.concretes
         public IResult Delete(CountryDto country)
         {
             _countryRepository.Delete(country);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Ülke silindi.");
         }
 
         public IResult DeleteById(int id)
         {
             _countryRepository.DeleteById(id);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Ülke silindi.");
         }
 
         public IDataResult<IEnumerable<CountryDto>> GetAll()
         {
-            return new SuccessDataResult<IEnumerable<CountryDto>>(_countryRepository.GetAll(), "Kullanıcılar listelendi.");
+            return new SuccessDataResult<IEnumerable<CountryDto>>(_countryRepository.GetAll(), "Ülkeler listelendi.");
         }
 
         public IDataResult<CountryDto> GetById(int id)
@@ -45,13 +41,13 @@ namespace SpotifyClone.Business.concretes
         public IResult Insert(CountryDto country)
         {
             _countryRepository.Insert(country);
-            return new SuccessResult("Kullanıcı eklendi.");
+            return new SuccessResult("Ülke eklendi.");
         }
 
         public IResult Update(CountryDto country)
         {
             _countryRepository.Update(country);
-            return new SuccessResult("Kullanıcı bilgileri güncellendi.");
+            return new SuccessResult("Ülke bilgileri güncellendi.");
         }
     }
 }

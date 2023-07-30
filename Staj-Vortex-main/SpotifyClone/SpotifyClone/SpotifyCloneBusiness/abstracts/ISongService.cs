@@ -17,6 +17,7 @@ namespace SpotifyClone.Business.abstracts
         IDataResult<IEnumerable<SongDto>> GetAllByAlbumId(int albumId);
         IDataResult<IEnumerable<SongDto>> GetSongsForUser(int userId);
         IDataResult<IEnumerable<SongDto>> GetAllByGenreId(int genreId);
+      
 
 
     }

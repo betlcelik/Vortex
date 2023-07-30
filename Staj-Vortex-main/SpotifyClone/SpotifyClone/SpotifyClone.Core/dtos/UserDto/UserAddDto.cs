@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Spotify.core.dtos.UserDto
 {
-	public class UserAddDto
+	public class UserAddDto 
 	{
 		public UserAddDto()
 		{

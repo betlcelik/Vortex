@@ -101,16 +101,6 @@ namespace SpotifyClone.API.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost]
-        public IActionResult BuyMembership([FromBody] PaymentAddDto membershipPaymentDto)
-        {
-            var result = _membershipService.BuyMembership(_mapper.Map<PaymentDto>(membershipPaymentDto));
-            if(result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
 
         // *
         [HttpPost]
@@ -128,6 +118,16 @@ namespace SpotifyClone.API.Controllers
         public IActionResult DowngradeMembership(int userId)
         {
             var result = _membershipService.DowngradeMembership(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost]
+        public IActionResult RenewMembership([FromBody] PaymentRenewMembershipDto paymentRenewMembershipDto)
+        {
+            var result = _membershipService.RenewMembership(_mapper.Map<PaymentDto>(paymentRenewMembershipDto));
             if (result.Success)
             {
                 return Ok(result);

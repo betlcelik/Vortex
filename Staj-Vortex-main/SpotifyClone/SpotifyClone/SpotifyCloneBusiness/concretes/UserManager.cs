@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Spotify.core.dtos.MembershipDto;
-using Spotify.core.dtos.PlaylistDto;
 using Spotify.core.dtos.UserDto;
 using Spotify.entities.concretes;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
-using SpotifyClone.Core.dtos.MembershipDto;
 using SpotifyClone.Core.dtos.UserDto;
 using SpotifyClone.Core.dtos.UserStatisticDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
@@ -24,16 +22,16 @@ namespace SpotifyClone.Business.concretes
         private readonly IUserStatisticService _userStatisticService;
         private readonly IPlaylistService _playlistService;
         private readonly ILikedSongsService _likedSongsService;
-        private readonly IPaymentService _paymentService;
+       
 
-        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService,IPlaylistService  playlistService,ILikedSongsService likedSongsService,IPaymentService paymentService)
+        public UserManager(IUserRepository userRepository, IMembershipService membershipService, IUserStatisticService userStatisticService,IPlaylistService  playlistService,ILikedSongsService likedSongsService)
 		{
             _userRepository = userRepository;
             _membershipService = membershipService;
             _userStatisticService = userStatisticService;
             _playlistService = playlistService;
             _likedSongsService = likedSongsService;
-            _paymentService = paymentService;
+           
 		}
 
         public IResult Delete(UserDto user)
@@ -50,7 +48,6 @@ namespace SpotifyClone.Business.concretes
             var user = GetById(id).Data;
             var userPlaylists = _playlistService.GetByUserId(id).Data;
             var membership = _membershipService.GetByUserId(user.id).Data.FirstOrDefault();
-            
             var userStatistic= _userStatisticService.GetUserStatisticByUserId(user.id).Data.FirstOrDefault();
             var userLikedSongs=_likedSongsService.GetAllByUserId(user.id).Data;
 
@@ -81,7 +78,6 @@ namespace SpotifyClone.Business.concretes
 
             user.state = "passive";
             Update(user);
-            // _userRepository.DeleteById(id);
             return new SuccessResult("Kullanıcı silindi.");
         }
 
@@ -92,9 +88,9 @@ namespace SpotifyClone.Business.concretes
 
         public IDataResult<IEnumerable<UserDto>> GetAllActiveUsers()
         {
-            return new SuccessDataResult<IEnumerable<UserDto>>(_userRepository.GetAll(user => user.state.Equals("active")),"Aktif Kullanıcılar Listelendi");
+            return new SuccessDataResult<IEnumerable<UserDto>>(_userRepository.GetAll(user => user.state.Equals("active")), "Aktif Kullanıcılar Listelendi");
         }
-
+        //getactiveusers
         public IDataResult<UserDto> GetById(int id)
         {
             return new SuccessDataResult<UserDto>(_userRepository.GetById(id));
@@ -138,7 +134,7 @@ namespace SpotifyClone.Business.concretes
           
         }
 
-        IDataResult<UserDto> IUserService.LogIn(UserLoginDto userLoginDto)
+        public IDataResult<UserDto> LogIn(UserLoginDto userLoginDto)
         {
 
             if(userLoginDto != null)
@@ -162,14 +158,10 @@ namespace SpotifyClone.Business.concretes
             {
                 return new ErrorDataResult<UserDto>(null, "Gerekli alanları dolduruğunuzdan emin olun ");
             }
-            
-
-            
-
            
         }
 
-        IResult IUserService.UpdatePassword(UserUpdatePasswordDto user)
+       public IResult UpdatePassword(UserUpdatePasswordDto user)
         {
             var _user= _userRepository.GetById(user.id);
             if(user != null && _user!= null)
@@ -190,6 +182,60 @@ namespace SpotifyClone.Business.concretes
             }
 
             return new ErrorResult("Eksik ya da hatalı bilgi");
+        }
+
+        public IDataResult<UserDto> GetByEmail(string _email)
+        {
+            return new SuccessDataResult<UserDto>(_userRepository.Get(user=> user.email.Equals(_email)));
+        }
+
+        public IDataResult<UserDto> GetByUserName(string userName)
+        {
+            return new SuccessDataResult<UserDto>(_userRepository.Get(user => user.userName.Equals(userName)));
+        }
+
+        public IDataResult<IEnumerable<UserDto>> GetAllFreeUsers()
+        {
+            var freeMemberships= _membershipService.GetAllFreeMemberships().Data.ToList();
+            List<UserDto> freeUsers = new List<UserDto>();
+            foreach (var freeMembership in freeMemberships)
+            {
+                freeUsers.Add(GetById(freeMembership.userId).Data);
+            }
+            return new SuccessDataResult<IEnumerable<UserDto>>(freeUsers,"Free Kullancılar Listeleniyor");
+        }
+
+        public IDataResult<IEnumerable<UserDto>> GetAllPremiumUsers()
+        {
+            var premiumMemberships=_membershipService.GetAllPremimumMemberships().Data.ToList();
+            List<UserDto> premiumUsers = new List<UserDto>();
+            foreach(var premiumMembership in premiumMemberships)
+            {
+                premiumUsers.Add(GetById(premiumMembership.userId).Data);
+            }
+            return new SuccessDataResult<IEnumerable<UserDto>>(premiumUsers,"Premium Kullanıcılar Listeleniyor");
+        }
+
+        public IDataResult<IEnumerable<UserDto>> GetAllStudentUsers()
+        {
+            var studentMemberships=_membershipService.GetAllStudentMemberships().Data.ToList(); 
+            List<UserDto> studentUsers = new List<UserDto>();
+            foreach ( var studentMembership in studentMemberships)
+            {
+                studentUsers.Add(GetById(studentMembership.userId).Data);
+            }
+            return new SuccessDataResult<IEnumerable<UserDto>>(studentUsers, "Öğrenci Kullanıcılar Listeleniyor");
+        }
+
+        public IDataResult<IEnumerable<UserDto>> GetUsersByMembershipTypeId(int membershipTypeId)
+        {
+            var memberships=_membershipService.GetByMembershipTypeId(membershipTypeId).Data.ToList();
+            List<UserDto> users= new List<UserDto>();
+            foreach ( var membership in memberships)
+            {
+                users.Add(GetById(membership.userId).Data);
+            }
+            return new SuccessDataResult<IEnumerable<UserDto>>(users, "Kullanıcılar listeleniyor");
         }
     }
 }

@@ -3,9 +3,6 @@ using System.Data;
 using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using Spotify.core.dtos.MembershipDto;
-using Spotify.core.dtos.PlaylistDto;
-using Spotify.entities.abstracts;
-using Spotify.entities.concretes;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
 using SpotifyClone.Core.concretes;
@@ -13,6 +10,7 @@ using SpotifyClone.Core.dtos.MembershipDto;
 using SpotifyClone.Core.dtos.PaymentDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
 using SpotifyClone.Core.Utilities.Results.Concretes;
+using SpotifyClone.Entities.abstracts;
 using SpotifyClone.Entities.concretes;
 
 namespace SpotifyClone.Business.concretes
@@ -20,65 +18,36 @@ namespace SpotifyClone.Business.concretes
 	public class MembershipManager : IMembershipService
 	{
         private readonly IMembershipRepository _membershipRepository;
-        private readonly IMembershipTypeRepository _membershipTypeRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IMembershipTypeService _membershipTypeService;
         private readonly IPaymentService _paymentService;
         
-		public MembershipManager(IMembershipRepository membershipRepository, IMembershipTypeRepository membershipTypeRepository,IPaymentService paymentService)
+		public MembershipManager(IMembershipRepository membershipRepository, IMembershipTypeService membershipTypeService,IPaymentService paymentService)
 		{
             _membershipRepository = membershipRepository;
-            _membershipTypeRepository = membershipTypeRepository;
+            _membershipTypeService = membershipTypeService; 
             _paymentService = paymentService;
             
         }
 
-        public IResult BuyMembership(PaymentDto membershipPaymentDto)
-        {
-            DateTime startDateTime = DateTime.Now.ToUniversalTime().Date;
-            DateTime endDateTime = startDateTime.AddMonths(1).ToUniversalTime();
-            var member = GetByUserId(membershipPaymentDto.userId).Data.FirstOrDefault();
-            MembershipType membershipType = _membershipTypeRepository.GetById(membershipPaymentDto.membershipTypeId);
-            if ( member == null)
-            {
-                   //ücretsiz üyelik oluşturuluyor değiştirme yapılmalı 
-                MembershipDto membership = new MembershipDto();
-                membership.userId = membershipPaymentDto.userId;
-                membership.membershipTypeId = membershipPaymentDto.membershipTypeId;
-                membership.startDate = startDateTime;
-                membership.endDate = endDateTime;
-                Insert(membership);
-                return new SuccessResult("Ödeme işlemi onaylandı . Tutar : " + membershipType.price);
-
-            }
-            member.startDate = startDateTime;
-            member.endDate = endDateTime;
-            member.membershipTypeId = membershipPaymentDto.membershipTypeId;
-            Update(member);
-            
-            
-            
-            
-            return new SuccessResult("Ödeme işlemi onaylandı . Tutar : " + membershipType.price);
-        }
+       
 
         public IResult Delete(MembershipDto membership)
         {
             _membershipRepository.Delete(membership);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Üyelik silindi.");
         }
 
         public IResult DeleteById(int id)
         {
             _membershipRepository.DeleteById(id);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Üyelik silindi.");
         }
 
         public IResult DowngradeMembership(int userId)
         {
-            DateTime startDateTime = DateTime.Now.ToUniversalTime().Date;
             var member = GetByUserId(userId).Data.FirstOrDefault();
             member.membershipTypeId = 1;
-            member.startDate = startDateTime;
+            member.startDate = member.endDate;
             member.endDate = DateTime.MaxValue;
             Update(member);
             return new SuccessResult("Üyelik iptal edildi");
@@ -86,12 +55,33 @@ namespace SpotifyClone.Business.concretes
 
         public IDataResult<IEnumerable<MembershipDto>> GetAll()
         {
-            return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(), "Kullanıcılar listelendi.");
+            return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(), "Üyelikler listelendi.");
+        }
+
+        public IDataResult<IEnumerable<MembershipDto>> GetAllFreeMemberships()
+        {
+            return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(membership => membership.membershipTypeId == 1), "Free Üyelikler Listeleniyor");
+        }
+
+        public IDataResult<IEnumerable<MembershipDto>> GetAllPremimumMemberships()
+        {
+            return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(membership => membership.membershipTypeId != 1),"Premium Üyelikler Listeleniyor");
+        }
+
+        public IDataResult<IEnumerable<MembershipDto>> GetAllStudentMemberships()
+        {
+            return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(membership => membership.membershipTypeId == 3), "Öğrenci Üyelikleri Listeleniyor");
         }
 
         public IDataResult<MembershipDto> GetById(int id)
         {
             return new SuccessDataResult<MembershipDto>(_membershipRepository.GetById(id));
+        }
+
+        public IDataResult<IEnumerable<MembershipDto>> GetByMembershipTypeId(int membershipTypeId)
+        {
+           return new SuccessDataResult<IEnumerable<MembershipDto>>(_membershipRepository.GetAll(membership => membership.membershipTypeId == membershipTypeId),"Üyelikler listeleniyor");
+            throw new NotImplementedException();
         }
 
         public IDataResult<IEnumerable<MembershipDto>> GetByUserId(int userId)
@@ -104,50 +94,46 @@ namespace SpotifyClone.Business.concretes
         {
            
             _membershipRepository.Insert(membership);
-            return new SuccessResult("Kullanıcı eklendi.");
+            return new SuccessResult("Üyelik eklendi.");
+        }
+
+        public IResult RenewMembership(PaymentDto membershipPaymentDto)
+        {
+            var membership = GetByUserId(membershipPaymentDto.userId).Data.FirstOrDefault();
+            DateTime startDateTime = membership.endDate;
+            
+            var membershipType = _membershipTypeService.GetById(membership.membershipTypeId).Data;
+            membershipPaymentDto.membershipTypeId = membership.membershipTypeId;
+            membershipPaymentDto.price = membershipType.price;
+            _paymentService.ControlPaymentInformations(membershipPaymentDto);
+
+            membership.startDate= startDateTime;
+            membership.endDate= startDateTime.AddMonths(1).ToUniversalTime();
+            Update(membership);
+            return new SuccessResult("Üyelik yenileme işlemi " + membershipType.price +" karşılığında yenilendi.");
         }
 
         public IResult Update(MembershipDto membership)
         {
             _membershipRepository.Update(membership);
-            return new SuccessResult("Kullanıcı bilgileri güncellendi.");
+            return new SuccessResult("Üyelik bilgileri güncellendi.");
         }
 
         public IResult UpgradeMembership(PaymentDto membershipPaymentDto)
         {
-            Random random = new Random();
-            int randomNumber = random.Next(0, 11);
+
             DateTime startDateTime = DateTime.Now.ToUniversalTime().Date;
-            DateTime endDateTime = startDateTime.AddMonths(1).ToUniversalTime();
-            string cardNo;
             var member = GetByUserId(membershipPaymentDto.userId).Data.FirstOrDefault();
-            MembershipType membershipType = _membershipTypeRepository.GetById(membershipPaymentDto.membershipTypeId);
+            var membershipType = _membershipTypeService.GetById(membershipPaymentDto.membershipTypeId).Data;
             member.startDate = startDateTime;
-            member.endDate = endDateTime;
+            member.endDate = startDateTime.AddMonths(1).ToUniversalTime();
             member.membershipTypeId = membershipPaymentDto.membershipTypeId;
-            membershipPaymentDto.paymentDate = startDateTime;
-            cardNo= membershipPaymentDto.cardNo;
-            membershipPaymentDto.cardNo = cardNo.Substring(0,4)+ new string('*',cardNo.Length -8 )+ cardNo.Substring(cardNo.Length-4);
-            membershipPaymentDto.cvc = "**" + membershipPaymentDto.cvc[2];
+
             membershipPaymentDto.price = membershipType.price;
 
-            if(randomNumber > 8)
-            {
-                membershipPaymentDto.state = "Limit yetersiz";
-                _paymentService.Insert(membershipPaymentDto);
-                return new ErrorResult("Ödeme işlemi gerçekleştirilemedi : Limit yetersiz");
-
-            }
-            if(randomNumber == 1) 
-            {
-                 membershipPaymentDto.state = "Kart Bilgileri Yanlış";
-                _paymentService.Insert(membershipPaymentDto);
-                return new ErrorResult("Ödeme işlemi gerçekleştirilemedi : Kart Bilgileri Yanlış");
-            }
-            membershipPaymentDto.state = "Ödendi";
-            _paymentService.Insert(membershipPaymentDto);
+            _paymentService.ControlPaymentInformations(membershipPaymentDto);
             Update(member);
-            return new SuccessResult(randomNumber + "Ödeme işlemi onaylandı . Tutar : " + membershipType.price);
+            return new SuccessResult("Ödeme işlemi onaylandı . Tutar : " + membershipType.price);
 
            
         }

@@ -56,6 +56,8 @@ namespace SpotifyClone.Business.concretes
             return new SuccessDataResult<IEnumerable<LikedSongsDto>>(_likedSongsRepository.GetAll(likedSong => likedSong.userId == userId));
         }
 
+       
+
         public IDataResult<LikedSongsDto> GetById(int id)
         {
             return new SuccessDataResult<LikedSongsDto>(_likedSongsRepository.GetById(id));

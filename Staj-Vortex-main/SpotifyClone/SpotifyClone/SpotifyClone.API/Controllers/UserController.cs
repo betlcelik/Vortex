@@ -37,15 +37,55 @@ namespace SpotifyClone.API.Controllers
         [HttpGet]
         public IActionResult GetAllActiveUsers()
         {
-            var result= _userService.GetAllActiveUsers();
+            var result = _userService.GetAllActiveUsers();
             if (result.Success)
             {
                 return Ok(result);
             }
-            return BadRequest(result); 
+            return BadRequest(result);
         }
-        //
-        
+
+        [HttpGet]
+        public IActionResult GetAllFreeUsers()
+        {
+            var result=_userService.GetAllFreeUsers();
+            if (result.Success)
+            {
+                return Ok(result);
+
+            }
+            return BadRequest(result);
+        }
+        [HttpGet]
+        public IActionResult GetAllPremiumUsers()
+        {
+            var result= _userService.GetAllPremiumUsers();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet]
+        public IActionResult GetAllStudentUsers()
+        {
+            var result=_userService.GetAllStudentUsers();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet]
+        public IActionResult GetByMembershipTypeId(int membershipTypeId)
+        {
+            var result=_userService.GetUsersByMembershipTypeId(membershipTypeId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpPost]
         public IActionResult Delete([FromBody] UserAddDto user) {
             var result = _userService.Delete(_mapper.Map<UserDto>(user));

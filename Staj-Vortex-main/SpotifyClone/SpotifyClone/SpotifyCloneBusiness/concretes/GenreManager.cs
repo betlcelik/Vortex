@@ -23,35 +23,36 @@ namespace SpotifyClone.Business.concretes
         public IResult Delete(GenreDto genre)
         {
             _genreRepository.Delete(genre);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Müzik türü silindi.");
         }
 
         public IResult DeleteById(int id)
         {
             _genreRepository.DeleteById(id);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Müzik türü  silindi.");
         }
 
         public IDataResult<IEnumerable<GenreDto>> GetAll()
         {
-            return new SuccessDataResult<IEnumerable<GenreDto>>(_genreRepository.GetAll(), "Kullanıcılar listelendi.");
+            return new SuccessDataResult<IEnumerable<GenreDto>>(_genreRepository.GetAll(), "Müzik türü  listelendi.");
         }
 
         public IDataResult<GenreDto> GetById(int id)
         {
+            
             return new SuccessDataResult<GenreDto>(_genreRepository.GetById(id));
         }
 
         public IResult Insert(GenreDto genre)
         {
             _genreRepository.Insert(genre);
-            return new SuccessResult("Kullanıcı eklendi.");
+            return new SuccessResult("Müzik türü  eklendi.");
         }
 
         public IResult Update(GenreDto genre)
         {
             _genreRepository.Update(genre);
-            return new SuccessResult("Kullanıcı bilgileri güncellendi.");
+            return new SuccessResult("Müzik türü  bilgileri güncellendi.");
         }
     }
 }

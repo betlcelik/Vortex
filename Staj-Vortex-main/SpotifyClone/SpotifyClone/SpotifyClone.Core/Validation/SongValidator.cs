@@ -9,7 +9,7 @@ namespace SpotifyClone.Core.Validation
 		public SongValidator()
 		{
 			RuleFor(song => song.isrc).NotNull().Length(12);
-			RuleFor(song => song.title).NotNull().Length(1, 30);
+			RuleFor(song => song.title).NotNull().Length(1, 35);
 			RuleFor(song => song.genreId).NotNull();
             RuleFor(song => song.artistId).NotNull();
             RuleFor(song => song.albumId).NotNull();

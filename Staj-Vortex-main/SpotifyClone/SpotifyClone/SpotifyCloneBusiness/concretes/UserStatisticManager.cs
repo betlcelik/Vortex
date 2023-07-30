@@ -18,11 +18,12 @@ namespace SpotifyClone.Business.concretes
     {
         private readonly IUserStatisticRepository _userStatisticRepository;
         private readonly IMembershipService _membershipService;
+       
         public UserStatisticManager(IUserStatisticRepository userStatisticRepository,IMembershipService membershipService)
         {
             _userStatisticRepository = userStatisticRepository;
             _membershipService = membershipService;
-            
+           
         }
 
         public IResult AddUserStatistics(UserStatisticDto addUserStatisticDto)
@@ -122,12 +123,13 @@ namespace SpotifyClone.Business.concretes
             var userType=_membershipService.GetByUserId(userId).Data.FirstOrDefault().membershipTypeId;
              if(userType == 1)
              {
-                 return new ErrorDataResult<IEnumerable<UserStatisticDto>>(null,"Kullanıcı istatistikleri sadece ücretli üyelikler için geçerlidir"+userType);
+                 return new ErrorDataResult<IEnumerable<UserStatisticDto>>(null,"Kullanıcı istatistikleri sadece ücretli üyelikler için geçerlidir");
              }
             var userStatistics = _userStatisticRepository.GetAll(userStatistic => userStatistic.userId == userId);
             return new SuccessDataResult<IEnumerable<UserStatisticDto>>(userStatistics, "Kullanıcı istatistikleri listeleniyor");
 
         }
+
     }
 
         

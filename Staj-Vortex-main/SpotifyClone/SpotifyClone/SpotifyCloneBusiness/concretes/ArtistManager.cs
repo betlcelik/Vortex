@@ -22,18 +22,18 @@ namespace SpotifyClone.Business.concretes
         public IResult Delete(ArtistDto artist)
         {
             _artistRepository.Delete(artist);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Sanatçı silindi.");
         }
 
         public IResult DeleteById(int id)
         {
             _artistRepository.DeleteById(id);
-            return new SuccessResult("Kullanıcı silindi.");
+            return new SuccessResult("Sanatçı silindi.");
         }
 
         public IDataResult<IEnumerable<ArtistDto>> GetAll()
         {
-            return new SuccessDataResult<IEnumerable<ArtistDto>>(_artistRepository.GetAll(), "Kullanıcılar listelendi.");
+            return new SuccessDataResult<IEnumerable<ArtistDto>>(_artistRepository.GetAll(), "Sanatçılar listelendi.");
         }
 
         public IDataResult<ArtistDto> GetById(int id)
@@ -44,13 +44,13 @@ namespace SpotifyClone.Business.concretes
         public IResult Insert(ArtistDto artist)
         {
             _artistRepository.Insert(artist);
-            return new SuccessResult("Kullanıcı eklendi.");
+            return new SuccessResult("Sanatçı eklendi.");
         }
 
         public IResult Update(ArtistDto artist)
         {
             _artistRepository.Update(artist);
-            return new SuccessResult("Kullanıcı bilgileri güncellendi.");
+            return new SuccessResult("Sanatçı bilgileri güncellendi.");
         }
     }
 }
