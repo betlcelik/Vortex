@@ -2,13 +2,8 @@
 using System.Text.Json;
 using Spotify.core.dtos.CountryDto;
 using Spotify.core.dtos.SongDto;
-using Spotify.core.dtos.UserDto;
-using Spotify.entities.abstracts;
-using Spotify.entities.concretes;
 using SpotifyClone.Business.abstracts;
 using SpotifyClone.Core.abstracts;
-using SpotifyClone.Core.concretes;
-using SpotifyClone.Core.dtos.PlaylistSongDto;
 using SpotifyClone.Core.Utilities.Results.Abstract;
 using SpotifyClone.Core.Utilities.Results.Concretes;
 
